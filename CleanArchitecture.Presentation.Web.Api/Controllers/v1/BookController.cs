@@ -73,7 +73,15 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
         [Authorize("delete:books")]
         public async Task<IActionResult> Delete(int id)
         {
-            return Ok(await Mediator.Send(new DeleteBookCommand { Id = id }));
+            // delete book
+            var deleteBookResult = await Mediator.Send(new DeleteBookRequest() { Id = id });
+
+            // return bad request if deletion failed
+            if (!deleteBookResult.Succeeded)
+                return BadRequest(deleteBookResult);
+
+            // return response
+            return NoContent();
         }
     }
 }
