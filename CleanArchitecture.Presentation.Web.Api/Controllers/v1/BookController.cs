@@ -29,7 +29,15 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok(await Mediator.Send(new GetBookByIdQuery { Id = id }));
+            // get book by id
+            var getBookResult = await Mediator.Send(new GetBookRequest() { Id = id });
+
+            // return not found if book does not exist
+            if (!getBookResult.Succeeded)
+                return NotFound(getBookResult);
+
+            // return response
+            return Ok(getBookResult);
         }
 
         // POST api/<controller>
