@@ -19,13 +19,18 @@ namespace CleanArchitecture.Presentation.Web.API.Extensions
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "Smart Demo Clean Architecture - ASP.NET Core 3.0 Web API",
+                    Title = "Clean Architecture Web API",
                     Description = "This Api will be responsible for overall data distribution and authorization.",
                     Contact = new OpenApiContact
                     {
-                        Name = "Sami Bader",
-                        Email = "badder.sammy@gmail.com",
-                        Url = new Uri("https://codewithmukesh.com/contact"),
+                        Name = "Andrew Blessing Manyore",
+                        Email = "andyblem.@gmail.com",
+                        Url = new Uri("https://example.com/license"),
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Example License",
+                        Url = new Uri("https://example.com/license")
                     }
                 });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
