@@ -33,7 +33,7 @@ namespace CleanArchitecture.Application.Requests.BookRequests
         public async Task<Response<int>> Handle(CreateBookRequest request, CancellationToken cancellationToken)
         {
             // check if ISBN is unique
-            var isUniquesISBNResult = await _mediator.Send(new IsUniqueISBN { ISBN = request.Book.ISBN }, cancellationToken);
+            var isUniquesISBNResult = await _mediator.Send(new IsUniqueISBNQuery { ISBN = request.Book.ISBN }, cancellationToken);
             if(isUniquesISBNResult.Succeeded == false || (isUniquesISBNResult.Succeeded == true && isUniquesISBNResult.Data == false))
             {
                 return new Response<int>(isUniquesISBNResult.Message);

@@ -126,13 +126,12 @@ else
     app.UseHsts();
 }
 
+app.UseErrorHandlingMiddleware();
 app.UseCors("AllowOrigin");
-
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseHttpLogging();
 app.UseSwaggerExtension();
-app.UseErrorHandlingMiddleware();
 app.UseHealthChecks("/health");
 
 app.MapControllers();

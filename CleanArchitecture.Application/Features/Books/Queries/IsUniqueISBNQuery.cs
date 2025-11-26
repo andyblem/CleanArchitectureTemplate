@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Features.Books.Queries
 {
-    public class IsUniqueISBN : IRequest<Response<bool>>
+    public class IsUniqueISBNQuery : IRequest<Response<bool>>
     {
         public string ISBN { get; set; }
     }
 
-    public class IsUniqueISBNHandler : IRequestHandler<IsUniqueISBN, Response<bool>>
+    public class IsUniqueISBNHandler : IRequestHandler<IsUniqueISBNQuery, Response<bool>>
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly ILogger<IsUniqueISBNHandler> _logger;
@@ -29,7 +29,7 @@ namespace CleanArchitecture.Application.Features.Books.Queries
             _logger = logger;
         }
 
-        public async Task<Response<bool>> Handle(IsUniqueISBN request, CancellationToken cancellationToken)
+        public async Task<Response<bool>> Handle(IsUniqueISBNQuery request, CancellationToken cancellationToken)
         {
             try
             {
