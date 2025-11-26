@@ -8,11 +8,13 @@ namespace CleanArchitecture.Application.Wrappers
     {
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
+        public int TotalPages { get; set; }
 
-        public PagedResponse(T data, int pageNumber, int pageSize)
+        public PagedResponse(T data, int pageNumber, int pageSize, int totalSize)
         {
             this.PageNumber = pageNumber;
             this.PageSize = pageSize;
+            this.TotalPages = pageSize == 0 ? 0 : (int)Math.Ceiling(totalSize / (double)pageSize);
             this.Data = data;
             this.Message = null;
             this.Succeeded = true;

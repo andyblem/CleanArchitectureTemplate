@@ -19,15 +19,22 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
     {
         // GET: api/<controller>
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetAllBooksParameter filter)
+        public async Task<IActionResult> GetList([FromQuery] GetAllBooksParameter filters)
         {
-          
-            return Ok(await Mediator.Send(new GetAllBooksQuery() { PageSize = filter.PageSize, PageNumber = filter.PageNumber  }));
+            // get all books with pagination
+            var getBooksListResult = await Mediator.Send(new GetBooksListRequest() { BookParameters = filters });
+
+            // return bad request if retrieval failed
+            if (!getBooksListResult.Succeeded)
+                return BadRequest();
+
+            // return response
+            return Ok(getBooksListResult);
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get([FromQuery]int id)
         {
             // get book by id
             var getBookResult = await Mediator.Send(new GetBookRequest() { Id = id });
@@ -79,7 +86,7 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         [Authorize("delete:books")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromQuery]int id)
         {
             // delete book
             var deleteBookResult = await Mediator.Send(new DeleteBookRequest() { Id = id });
