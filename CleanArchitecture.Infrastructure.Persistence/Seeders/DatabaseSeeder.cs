@@ -19,8 +19,10 @@ namespace CleanArchitecture.Infrastructure.Persistance.Seeders
             var userManager = scope.ServiceProvider.GetRequiredService<CustomUserManager<CustomIdentityUser>>();
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
+            Audit.Core.Configuration.AuditDisabled = true;
             await RolesSeeder.SeedAsync(roleManager);
             await UsersSeeder.SeedAsync(userManager, roleManager, configuration, logger);
+            Audit.Core.Configuration.AuditDisabled = false;
         }
     }
 }

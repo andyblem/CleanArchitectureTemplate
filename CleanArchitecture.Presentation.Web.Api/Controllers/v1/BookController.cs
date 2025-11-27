@@ -37,9 +37,9 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
         }
 
         // GET api/<controller>/5
-        [HttpGet("{id}")]
+        [HttpGet]
         [Authorize("read:books")]
-        [Route("Get")]
+        [Route("Get/{id}")]
         public async Task<IActionResult> Get([FromRoute]int id)
         {
             // get book by id
@@ -66,7 +66,7 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
             var result = await Mediator.Send(new CreateBookRequest()
             {
                 Book = book
-            }, 
+            },
             HttpContext.RequestAborted);
 
             // return bad request if creation failed
@@ -78,9 +78,9 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
         }
 
         // PUT api/<controller>/5
-        [HttpPut("{id}")]
+        [HttpPut]
         [Authorize("update:books")]
-        [Route("Put")]
+        [Route("Put/{id}")]
         public async Task<IActionResult> Put([FromRoute] int id, [FromBody]UpdateBookDTO book)
         {
             // validate request body
@@ -103,9 +103,9 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
         }
 
         // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
         [Authorize("delete:books")]
-        [Route("Delete")]
+        [Route("Delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             // delete book

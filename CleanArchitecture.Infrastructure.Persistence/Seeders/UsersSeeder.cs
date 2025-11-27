@@ -113,6 +113,9 @@ namespace CleanArchitecture.Admin.Infrastructure.Persistance.Seeders
                                     logger.LogWarning("Role {Role} does not exist when trying to assign to user {Email}", user.Role, user.Email);
                                 }
                             }
+
+                            // get saved user
+                            savedUser = await userManager.FindByEmailAsync(user.Email);
                         }
                         else
                         {
@@ -121,22 +124,24 @@ namespace CleanArchitecture.Admin.Infrastructure.Persistance.Seeders
                     }
 
 
-                    // get claims for this role
-                    var currIdentityUser = await userManager.FindByEmailAsync(user.Email);
-                    var identityRole = await roleManager.FindByNameAsync(user.Role);
-                    var roleClaims = await roleManager.GetClaimsAsync(identityRole);
+                    if (savedUser != null) 
+                    { 
+                        // get claims for this role
+                        var identityRole = await roleManager.FindByNameAsync(user.Role);
+                        var roleClaims = await roleManager.GetClaimsAsync(identityRole);
 
-                    // add claims to users
-                    if (roleClaims.Count() > 0)
-                    {
-                        var userClaims = await userManager.GetClaimsAsync(currIdentityUser);
-
-                        foreach (var claim in roleClaims)
+                        // add claims to users
+                        if (roleClaims.Count() > 0)
                         {
-                            var isUserClaimExists = userClaims.Any(c => c.Type == claim.Type);
-                            if (isUserClaimExists == false)
+                            var userClaims = await userManager.GetClaimsAsync(savedUser);
+
+                            foreach (var claim in roleClaims)
                             {
-                                await userManager.AddClaimAsync(currIdentityUser, claim);
+                                var isUserClaimExists = userClaims.Any(c => c.Type == claim.Type);
+                                if (isUserClaimExists == false)
+                                {
+                                    await userManager.AddClaimAsync(savedUser, claim);
+                                }
                             }
                         }
                     }

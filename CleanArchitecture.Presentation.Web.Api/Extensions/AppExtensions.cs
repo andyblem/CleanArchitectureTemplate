@@ -14,7 +14,7 @@ namespace CleanArchitecture.Presentation.Web.API.Extensions
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "CleanArchitecture.Web.Api");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "CleanArchitecture.Web.API");
             });
         }
         public static void UseErrorHandlingMiddleware(this IApplicationBuilder app)
