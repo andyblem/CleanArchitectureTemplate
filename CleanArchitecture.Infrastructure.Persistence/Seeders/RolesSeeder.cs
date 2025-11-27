@@ -18,11 +18,10 @@ namespace CleanArchitecture.Infrastructure.Persistence.Seeders
                 Claims = new List<ClaimDTO>()
                 {
                     // Book
-                    new ClaimDTO() { ClaimType = "CanCreateBook", ClaimValue = "Yes" },
-                    new ClaimDTO() { ClaimType = "CanDeleteBook", ClaimValue = "Yes" },
-                    new ClaimDTO() { ClaimType = "CanGetBook", ClaimValue = "Yes" },
-                    new ClaimDTO() { ClaimType = "CanGetPaginatedListBook", ClaimValue = "Yes" },
-                    new ClaimDTO() { ClaimType = "CanUpdateBook", ClaimValue = "Yes" },
+                    new ClaimDTO() { ClaimType = "permission", ClaimValue = "create:books" },
+                    new ClaimDTO() { ClaimType = "permission", ClaimValue = "delete:books" },
+                    new ClaimDTO() { ClaimType = "permission", ClaimValue = "read:books" },
+                    new ClaimDTO() { ClaimType = "permission", ClaimValue = "update:books" },
                 }
             }
         };

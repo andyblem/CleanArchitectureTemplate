@@ -73,8 +73,9 @@ builder.Services.AddAuthorization(options =>
     foreach (var claim in allUniqueClaims)
     {
         // get defined claims
-        options.AddPolicy(claim.ClaimType,
-            policy => policy.RequireClaim(claim.ClaimType, claim.ClaimValue).RequireAuthenticatedUser());
+        options.AddPolicy(claim.ClaimValue, 
+            policy => policy.RequireClaim(claim.ClaimType, claim.ClaimValue)
+                .RequireAuthenticatedUser());
 
     };
 });

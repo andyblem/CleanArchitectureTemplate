@@ -17,6 +17,8 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
     {
         // GET: api/<controller>
         [HttpGet]
+        [Authorize("read:books")]
+        [Route("GetList")]
         public async Task<IActionResult> GetList([FromQuery] GetBooksListParameter filters)
         {
             // get all books with pagination
@@ -36,6 +38,8 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
+        [Authorize("read:books")]
+        [Route("Get")]
         public async Task<IActionResult> Get([FromRoute]int id)
         {
             // get book by id
@@ -56,6 +60,7 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
         // POST api/<controller>
         [HttpPost]
         [Authorize("create:books")]
+        [Route("Post")]
         public async Task<IActionResult> Post([FromBody] CreateBookDTO book)
         {
             var result = await Mediator.Send(new CreateBookRequest()
@@ -75,6 +80,7 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
         // PUT api/<controller>/5
         [HttpPut("{id}")]
         [Authorize("update:books")]
+        [Route("Put")]
         public async Task<IActionResult> Put([FromRoute] int id, [FromBody]UpdateBookDTO book)
         {
             // validate request body
@@ -99,6 +105,7 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         [Authorize("delete:books")]
+        [Route("Delete")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             // delete book
