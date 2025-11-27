@@ -23,9 +23,9 @@ namespace CleanArchitecture.Application.Features.Books.Queries
     public class GetBookByIdQueryHandler : IRequestHandler<GetBookByIdQuery, Response<BookDTO>>
     {
         private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger _logger;
+        private readonly ILogger<GetBookByIdQueryHandler> _logger;
 
-        public GetBookByIdQueryHandler(IApplicationDbContext dbContext, ILogger logger)
+        public GetBookByIdQueryHandler(IApplicationDbContext dbContext, ILogger<GetBookByIdQueryHandler> logger)
         {
             _dbContext = dbContext;
             _logger = logger;

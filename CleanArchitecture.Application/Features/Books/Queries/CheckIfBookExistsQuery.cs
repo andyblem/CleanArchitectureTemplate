@@ -20,9 +20,9 @@ namespace CleanArchitecture.Application.Features.Books.Queries
     public class CheckIfBookExistsQueryHandler : IRequestHandler<CheckIfBookExistsQuery, Response<bool>>
     {
         private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger _logger;
+        private readonly ILogger<CheckIfBookExistsQueryHandler> _logger;
 
-        public CheckIfBookExistsQueryHandler(IApplicationDbContext dbContext, ILogger logger)
+        public CheckIfBookExistsQueryHandler(IApplicationDbContext dbContext, ILogger<CheckIfBookExistsQueryHandler> logger)
         {
             _dbContext = dbContext;
             _logger = logger;

@@ -22,9 +22,9 @@ namespace CleanArchitecture.Application.Features.Books.Commands
     public class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand, Response<int>>
     {
         private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger _logger;
+        private readonly ILogger<DeleteBookCommandHandler> _logger;
 
-        public DeleteBookCommandHandler(IApplicationDbContext dbContext, ILogger logger)
+        public DeleteBookCommandHandler(IApplicationDbContext dbContext, ILogger<DeleteBookCommandHandler> logger)
         {
             _dbContext = dbContext;
             _logger = logger;

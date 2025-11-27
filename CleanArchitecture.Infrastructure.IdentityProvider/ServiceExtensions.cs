@@ -29,7 +29,7 @@ namespace CleanArchitecture.Infrastructure.IdentityProvider
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("IdentityProvider")));
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("CleanArchitecture.Infrastructure.IdentityProvider")));
 
             // load data from settings to DI
             builder.Services.Configure<JwtSettingsDTO>(configuration.GetSection("JWTSettings"));

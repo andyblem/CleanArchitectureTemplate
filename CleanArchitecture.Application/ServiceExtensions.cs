@@ -18,7 +18,7 @@ namespace CleanArchitecture.Application
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("CleanArchitecture.Presentation.Web.API")));
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("CleanArchitecture.Application")));
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("CleanArchitecture.Infrastructure.Persistance")));
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("CleanArchitecture.Infrastructure.Persistence")));
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 

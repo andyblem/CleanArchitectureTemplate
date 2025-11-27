@@ -24,34 +24,51 @@ namespace CleanArchitecture.Infrastructure.Persistence.Contexts
 
         public DbSet<Book> Books { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IDateTimeService dateTime, IAuthenticatedUserService authenticatedUser) : base(options)
+
+        public ApplicationDbContext()
+            : base()
+        { }
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        }
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IDateTimeService dateTime, IAuthenticatedUserService authenticatedUser)
+            : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             _dateTime = dateTime;
             _authenticatedUser = authenticatedUser;
         }
 
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            foreach (var entry in ChangeTracker.Entries<IAuditable>())
+            if (_dateTime != null && _authenticatedUser != null)
             {
-                switch (entry.State)
+                foreach (var entry in ChangeTracker.Entries<IAuditable>())
                 {
-                    case EntityState.Added:
-                        entry.Entity.CreatedAt = _dateTime.NowUtc;
-                        entry.Entity.CreatedBy = _authenticatedUser.UserId;
-                        break;
-                    case EntityState.Modified:
-                        entry.Entity.ModifiedAt = _dateTime.NowUtc;
-                        entry.Entity.ModifiedBy = _authenticatedUser.UserId;
-                        break;
-                    case EntityState.Deleted:
-                        entry.Entity.IsDeleted = true;
-                        entry.Entity.DeletedAt = _dateTime.NowUtc;
-                        entry.Entity.DeletedBy = _authenticatedUser.UserId;
-                        break;
+                    switch (entry.State)
+                    {
+                        case EntityState.Added:
+                            entry.Entity.CreatedAt = _dateTime.NowUtc;
+                            entry.Entity.CreatedBy = _authenticatedUser.UserId;
+                            break;
+                        case EntityState.Modified:
+                            entry.Entity.ModifiedAt = _dateTime.NowUtc;
+                            entry.Entity.ModifiedBy = _authenticatedUser.UserId;
+                            break;
+                        case EntityState.Deleted:
+                            entry.Entity.IsDeleted = true;
+                            entry.Entity.DeletedAt = _dateTime.NowUtc;
+                            entry.Entity.DeletedBy = _authenticatedUser.UserId;
+                            break;
+                    }
                 }
             }
+
             return base.SaveChangesAsync(cancellationToken);
         }
 

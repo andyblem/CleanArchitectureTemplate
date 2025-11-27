@@ -24,9 +24,9 @@ namespace CleanArchitecture.Application.Features.Books.Queries
     public class GetBooksListQueryHandler : IRequestHandler<GetBooksListQuery, PagedResponse<IEnumerable<BookListItemDTO>>>
     {
         private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger _logger;
+        private readonly ILogger<GetBooksListQueryHandler> _logger;
 
-        public GetBooksListQueryHandler(IApplicationDbContext dbContext, ILogger logger)
+        public GetBooksListQueryHandler(IApplicationDbContext dbContext, ILogger<GetBooksListQueryHandler> logger)
         {
             _dbContext = dbContext;
             _logger = logger;
