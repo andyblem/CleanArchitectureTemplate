@@ -13,8 +13,25 @@ namespace CleanArchitecture.Application.Mappings
     {
         public BookProfiles()
         {
-            CreateMap<CreateBookDTO, Book>();
-            CreateMap<UpdateBookDTO, Book>();
+            CreateMap<CreateBookDTO, Book>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.ModifiedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.DeletedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.DeletedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.IsDeleted, opt => opt.Ignore());
+
+            CreateMap<UpdateBookDTO, Book>()
+                .ForMember(dest => dest.ISBN, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.ModifiedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.DeletedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.DeletedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.IsDeleted, opt => opt.Ignore());
         }
     }
 }
