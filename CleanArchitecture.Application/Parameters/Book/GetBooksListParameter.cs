@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CleanArchitecture.Application.Features.Books.Queries.GetAllBooks
+namespace CleanArchitecture.Application.Parameters.Book
 {
-    public class GetAllBooksParameter : RequestParameter
+    public class GetBooksListParameter : RequestParameter
     {
 
     }

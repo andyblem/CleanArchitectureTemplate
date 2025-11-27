@@ -1,9 +1,7 @@
 ﻿using Asp.Versioning;
 using CleanArchitecture.Application.DTOs.Book;
-using CleanArchitecture.Application.Features.Books.Commands;
-using CleanArchitecture.Application.Features.Books.Queries.GetAllBooks;
-using CleanArchitecture.Application.Features.Books.Queries.GetBookById;
 using CleanArchitecture.Application.Filters;
+using CleanArchitecture.Application.Parameters.Book;
 using CleanArchitecture.Application.Requests.BookRequests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,32 +17,40 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
     {
         // GET: api/<controller>
         [HttpGet]
-        public async Task<IActionResult> GetList([FromQuery] GetAllBooksParameter filters)
+        public async Task<IActionResult> GetList([FromQuery] GetBooksListParameter filters)
         {
             // get all books with pagination
-            var getBooksListResult = await Mediator.Send(new GetBooksListRequest() { BookParameters = filters });
+            var result = await Mediator.Send(new GetBooksListRequest() 
+            { 
+                BookParameters = filters 
+            },
+            HttpContext.RequestAborted);
 
             // return bad request if retrieval failed
-            if (!getBooksListResult.Succeeded)
-                return BadRequest();
+            if (!result.Succeeded)
+                return FromResponse(result);
 
             // return response
-            return Ok(getBooksListResult);
+            return Ok(result);
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromQuery]int id)
+        public async Task<IActionResult> Get([FromRoute]int id)
         {
             // get book by id
-            var getBookResult = await Mediator.Send(new GetBookRequest() { Id = id });
+            var result = await Mediator.Send(new GetBookRequest() 
+            { 
+                Id = id 
+            },
+            HttpContext.RequestAborted);
 
             // return not found if book does not exist
-            if (!getBookResult.Succeeded)
-                return NotFound(getBookResult);
+            if (!result.Succeeded)
+                return FromResponse(result);
 
             // return response
-            return Ok(getBookResult);
+            return Ok(result);
         }
 
         // POST api/<controller>
@@ -52,32 +58,39 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
         [Authorize("create:books")]
         public async Task<IActionResult> Post([FromBody] CreateBookDTO book)
         {
-            var createBookResult = await Mediator.Send(new CreateBookRequest()
+            var result = await Mediator.Send(new CreateBookRequest()
             {
                 Book = book
-            });
+            }, 
+            HttpContext.RequestAborted);
 
             // return bad request if creation failed
-            if (!createBookResult.Succeeded)
-                return BadRequest(createBookResult);
+            if (!result.Succeeded)
+                return FromResponse(result);
 
             // return response
-            return CreatedAtAction(nameof(Get), new { id = createBookResult.Data }, createBookResult);
+            return CreatedAtAction(nameof(Get), new { id = result.Data }, result);
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
         [Authorize("update:books")]
-        public async Task<IActionResult> Put([FromQuery]int id, [FromBody]UpdateBookDTO book)
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody]UpdateBookDTO book)
         {
-            var updateBookResult = await Mediator.Send(new UpdateBookRequest()
+            // validate request body
+            if (book == null)
+                return BadRequest("Request body is required.");
+
+            var result = await Mediator.Send(new UpdateBookRequest()
             {
+                Id = id,
                 Book = book
-            });
+            },
+            HttpContext.RequestAborted);
 
             // return bad request if creation failed
-            if (!updateBookResult.Succeeded)
-                return BadRequest(updateBookResult);
+            if (!result.Succeeded)
+                return FromResponse(result);
 
             // return response
             return NoContent();
@@ -86,14 +99,18 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         [Authorize("delete:books")]
-        public async Task<IActionResult> Delete([FromQuery]int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             // delete book
-            var deleteBookResult = await Mediator.Send(new DeleteBookRequest() { Id = id });
+            var result = await Mediator.Send(new DeleteBookRequest() 
+            { 
+                Id = id 
+            },
+            HttpContext.RequestAborted);
 
             // return bad request if deletion failed
-            if (!deleteBookResult.Succeeded)
-                return BadRequest(deleteBookResult);
+            if (!result.Succeeded)
+                return FromResponse(result);
 
             // return response
             return NoContent();

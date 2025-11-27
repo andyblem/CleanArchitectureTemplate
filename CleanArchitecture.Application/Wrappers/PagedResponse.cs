@@ -9,6 +9,7 @@ namespace CleanArchitecture.Application.Wrappers
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public int TotalPages { get; set; }
+        public object TotalSize { get; set; }
 
         public PagedResponse(T data, int pageNumber, int pageSize, int totalSize)
         {

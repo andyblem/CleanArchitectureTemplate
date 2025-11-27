@@ -6,17 +6,22 @@ namespace CleanArchitecture.Application.Filters
 {
     public class RequestParameter
     {
+        public const int _defaultPageSize = 10;
+        public const int _maxPageSize = 100;
+
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
+
         public RequestParameter()
         {
-            this.PageNumber = 1;
-            this.PageSize = 10;
+            PageNumber = 1;
+            PageSize = _defaultPageSize;
         }
+
         public RequestParameter(int pageNumber, int pageSize)
         {
-            this.PageNumber = pageNumber < 1 ? 1 : pageNumber;
-            this.PageSize = pageSize > 10 ? 10 : pageSize;
+            PageNumber = pageNumber < 1 ? 1 : pageNumber;
+            PageSize = pageSize > _maxPageSize ? _maxPageSize : pageSize;
         }
     }
 }

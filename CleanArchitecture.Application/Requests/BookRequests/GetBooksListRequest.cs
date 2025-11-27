@@ -1,5 +1,6 @@
 ﻿using CleanArchitecture.Application.DTOs.Book;
-using CleanArchitecture.Application.Features.Books.Queries.GetAllBooks;
+using CleanArchitecture.Application.Features.Books.Queries;
+using CleanArchitecture.Application.Parameters.Book;
 using CleanArchitecture.Application.Wrappers;
 using MediatR;
 using System;
@@ -13,7 +14,7 @@ namespace CleanArchitecture.Application.Requests.BookRequests
 {
     public class GetBooksListRequest : IRequest<PagedResponse<IEnumerable<BookListItemDTO>>>
     {
-        public GetAllBooksParameter BookParameters { get; set; }
+        public GetBooksListParameter BookParameters { get; set; }
     }
 
     public class GetBooksListRequestHandler : IRequestHandler<GetBooksListRequest, PagedResponse<IEnumerable<BookListItemDTO>>>
@@ -28,7 +29,7 @@ namespace CleanArchitecture.Application.Requests.BookRequests
         public async Task<PagedResponse<IEnumerable<BookListItemDTO>>> Handle(GetBooksListRequest request, CancellationToken cancellationToken)
         {
             // get books
-            var getBooksListResult = await _mediator.Send(new GetAllBooksQuery() 
+            var getBooksListResult = await _mediator.Send(new GetBooksListQuery() 
             { 
                 Parameters = request.BookParameters 
             }, 
