@@ -36,19 +36,13 @@ namespace CleanArchitecture.Application.Features.Books.Queries
                 bool exists = await _dbContext.Books
                     .AnyAsync(b => b.Id == request.Id);
 
-                return new Response<bool>(exists);
+                return Response<bool>.Success(exists);
             }
             catch (Exception ex)
             {
                 // log error and return failure response
                 _logger.LogError(ex, "Error checking if book exists with Id {BookId}", request.Id);
-                return new Response<bool>
-                {
-                    Succeeded = false,
-                    Message = "Error checking if book exists.",
-                    Errors = new List<string> { ex.Message },
-                    Data = false
-                };
+                return Response<bool>.Failure("Error checking if book exists.", new List<string> { ex.Message });
             }
         }
     }

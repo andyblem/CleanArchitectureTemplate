@@ -53,21 +53,21 @@ namespace CleanArchitecture.Infrastructure.IdentityProvider.Services
             if (user == null)
             {
                 // return result
-                return new Response<AuthenticationResponseDTO>("User not found");
+                return Response<AuthenticationResponseDTO>.Failure("User not found");
             }
             else
             {
                 // check user password
                 var userPasswordValid = await _customUserManager.CheckPasswordAsync(user, request.Password);
                 if (userPasswordValid == false)
-                    return new Response<AuthenticationResponseDTO>("User password invalid");
+                    return Response<AuthenticationResponseDTO>.Failure("User password invalid");
 
                 // validate JWT settings
                 if (_jwtSettings == null)
-                    return new Response<AuthenticationResponseDTO>("JWT settings not configured");
+                    return Response<AuthenticationResponseDTO>.Failure("JWT settings not configured");
 
                 if (string.IsNullOrWhiteSpace(_jwtSettings.Key))
-                    return new Response<AuthenticationResponseDTO>("JWT signing key is not configured");
+                    return Response<AuthenticationResponseDTO>.Failure("JWT signing key is not configured");
 
                 // parse duration safely
                 if (!int.TryParse(_jwtSettings.DurationInMinutes, out var durationInMinutes))
@@ -151,7 +151,7 @@ namespace CleanArchitecture.Infrastructure.IdentityProvider.Services
                 };
 
                 // return result
-                return new Response<AuthenticationResponseDTO>(response, string.Empty);
+                return Response<AuthenticationResponseDTO>.Success(response, string.Empty);
             }
         }
 
@@ -171,7 +171,7 @@ namespace CleanArchitecture.Infrastructure.IdentityProvider.Services
             if (userProfile == null)
             {
                 // return result
-                return new Response<UserProfileDTO>("User not found");
+                return Response<UserProfileDTO>.Failure("User not found");
             }
             else
             {
@@ -194,7 +194,7 @@ namespace CleanArchitecture.Infrastructure.IdentityProvider.Services
                 }
 
                 // return result
-                return new Response<UserProfileDTO>(userProfile);
+                return Response<UserProfileDTO>.Success(userProfile);
             }
         }
 

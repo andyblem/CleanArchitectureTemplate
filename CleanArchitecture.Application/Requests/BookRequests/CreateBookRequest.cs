@@ -36,7 +36,7 @@ namespace CleanArchitecture.Application.Requests.BookRequests
             var isUniquesISBNResult = await _mediator.Send(new IsUniqueISBNQuery { ISBN = request.Book.ISBN }, cancellationToken);
             if(isUniquesISBNResult.Succeeded == false || (isUniquesISBNResult.Succeeded == true && isUniquesISBNResult.Data == false))
             {
-                return new Response<int>(isUniquesISBNResult.Message);
+                return Response<int>.Failure(isUniquesISBNResult.Message);
             }
 
             // create book

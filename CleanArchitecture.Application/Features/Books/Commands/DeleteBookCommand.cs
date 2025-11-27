@@ -46,18 +46,18 @@ namespace CleanArchitecture.Application.Features.Books.Commands
                     await _dbContext.SaveChangesAsync(cancellationToken);
 
                     // return response
-                    return new Response<int>(book.Id, "Book deleted successfully.");
+                    return Response<int>.Success(book.Id, "Book deleted successfully.");
                 }
                 else
                 {
-                    return new Response<int>("Book not found.");
+                    return Response<int>.Failure("Book not found.");
                 }
             }
             catch (Exception ex)
             {
                 // log error and return response
                 _logger.LogError(ex, "Error deleting book with id {BookId}", request.Id);
-                return new Response<int>($"An error occurred while deleting the book: {ex.Message}");
+                return Response<int>.Failure("Error deleting book with id {BookId}" + request.Id, new List<string> { ex.Message });
             }
         }
     }

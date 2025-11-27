@@ -45,18 +45,13 @@ namespace CleanArchitecture.Application.Features.Books.Commands
                 await _dbContext.SaveChangesAsync();
 
                 // return result
-                return new Response<int>(book.Id, "Book updated successfully");
+                return Response<int>.Success(book.Id, "Book updated successfully");
             }
             catch (Exception ex)
             {
                 // log error and return result
                 _logger.LogError(ex, "Error updating book");
-                return new Response<int>
-                {
-                    Succeeded = false,
-                    Message = "Error updating book",
-                    Errors = new List<string> { ex.Message }
-                };
+                return Response<int>.Failure("Error updating book", new List<string> { ex.Message });
             }
         }
     }

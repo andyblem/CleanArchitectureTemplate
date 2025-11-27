@@ -52,33 +52,18 @@ namespace CleanArchitecture.Application.Features.Books.Queries
 
                 if (book == null)
                 {
-                    return new Response<BookDTO>()
-                    {
-                        Succeeded = false,
-                        Message = "Book not found",
-                        Data = null
-                    };
+                    return Response<BookDTO>.Failure("Book not found");
                 }
                 else
                 {
-                    return new Response<BookDTO>()
-                    {
-                        Succeeded = true,
-                        Message = "Book retrieved successfully",
-                        Data = book
-                    };
+                    return Response<BookDTO>.Success(book, "Book retrieved successfully");
                 }
             }
             catch (Exception ex)
             {
                 // log exception and return failure response
                 _logger.LogError(ex, "An error occurred while retrieving the book with ID {BookId}", query.Id);
-                return new Response<BookDTO>()
-                {
-                    Succeeded = false,
-                    Message = $"An error occurred while retrieving the book: {ex.Message}",
-                    Data = null
-                };
+                return Response<BookDTO>.Failure("An error occurred while retrieving the book.", new List<string>() { ex.Message });
             }
         }
     }

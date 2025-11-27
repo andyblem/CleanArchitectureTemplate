@@ -38,15 +38,13 @@ namespace CleanArchitecture.Application.Features.Books.Queries
                     .AnyAsync(p => p.ISBN == request.ISBN);
 
                 // return response
-                return new Response<bool>(isUnique, isUnique ? "ISBN is unique." : "ISBN already exists.");
+                return Response<bool>.Success(isUnique, isUnique ? "ISBN is unique." : "ISBN already exists.");
             }
             catch (Exception ex)
             {
                 // log error
                 _logger.LogError(ex, "Error checking unique ISBN.");
-
-                // return failure response
-                return new Response<bool>(ex.Message);
+                return Response<bool>.Failure("Error checking unique ISBN.", new List<string> { ex.Message });
             }
         }
     }

@@ -34,30 +34,38 @@ namespace CleanArchitecture.Application.Features.Books.Queries
 
         public async Task<PagedResponse<IEnumerable<BookListItemDTO>>> Handle(GetBooksListQuery request, CancellationToken cancellationToken)
         {
-            // get books
-            var booksQuery = _dbContext.Books
-                .AsNoTracking()
-                .OrderBy(b => b.Id)
-                .Select(b => new BookListItemDTO
-                {
-                    Id = b.Id,
-                    Title = b.Title,
-                    ISBN = b.ISBN,
-                    Price = b.Price
-                });
+            try
+            {
+                // get books
+                var booksQuery = _dbContext.Books
+                    .AsNoTracking()
+                    .OrderBy(b => b.Id)
+                    .Select(b => new BookListItemDTO
+                    {
+                        Id = b.Id,
+                        Title = b.Title,
+                        ISBN = b.ISBN,
+                        Price = b.Price
+                    });
 
-            // count total books
-            var totalBooks = await booksQuery.CountAsync(cancellationToken);
-            var result = await booksQuery
-                .Skip((request.Parameters.PageNumber - 1) * request.Parameters.PageSize)
-                .Take(request.Parameters.PageSize)
-                .ToListAsync(cancellationToken);
+                // count total books
+                var totalBooks = await booksQuery.CountAsync(cancellationToken);
+                var result = await booksQuery
+                    .Skip((request.Parameters.PageNumber - 1) * request.Parameters.PageSize)
+                    .Take(request.Parameters.PageSize)
+                    .ToListAsync(cancellationToken);
 
-            // return paged response
-            return new PagedResponse<IEnumerable<BookListItemDTO>>(result, 
-                request.Parameters.PageNumber, 
-                request.Parameters.PageSize,
-                totalBooks);
+                // return paged response
+                return PagedResponse<IEnumerable<BookListItemDTO>>.Success(result,
+                    request.Parameters.PageNumber,
+                    request.Parameters.PageSize,
+                    totalBooks);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while getting books list.");
+                return PagedResponse<IEnumerable<BookListItemDTO>>.Failure("Error occurred while getting books list.", new List<string> { ex.Message });
+            }
         }
     }
 }

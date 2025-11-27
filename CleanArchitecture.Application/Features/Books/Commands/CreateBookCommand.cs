@@ -38,29 +38,19 @@ namespace CleanArchitecture.Application.Features.Books.Commands
                 await _dbContext.SaveChangesAsync(cancellationToken);
 
                 // return response
-                return new Response<int>(book.Id);
+                return Response<int>.Success(book.Id);
             }
             catch (DbUpdateException dbEx)
             {
                 // log error and return response
                 _logger.LogWarning(dbEx, "Database update failed (possible duplicate ISBN).");
-                return new Response<int>
-                {
-                    Succeeded = false,
-                    Message = "ISBN already exists.",
-                    Errors = new List<string> { "ISBN already exists." }
-                };
+                return Response<int>.Failure("ISBN already exists.");
             }
             catch (Exception ex)
             {
                 // log error and return response
                 _logger.LogError(ex, "Error creating book");
-                return new Response<int>
-                {
-                    Succeeded = false,
-                    Message = ex.Message,
-                    Errors = new List<string> { ex.Message }
-                };
+                return Response<int>.Failure("Error creating book", new List<string> { ex.Message });
             }
         }
     }

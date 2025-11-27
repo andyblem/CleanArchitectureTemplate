@@ -38,7 +38,7 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers
 
             if (response is PagedResponse<object> pagedObj)
             {
-                Response.Headers["X-Total-Count"] = pagedObj.TotalSize.ToString();
+                Response.Headers["X-Total-Count"] = pagedObj.TotalRecords.ToString();
                 Response.Headers["X-Total-Pages"] = pagedObj.TotalPages.ToString();
 
                 return Ok(response);
