@@ -8,5 +8,14 @@ namespace CleanArchitecture.Application.Parameters.Book
     public class GetBooksListParameter : RequestParameter
     {
 
+        public GetBooksListParameter()
+            : base()
+        {
+        }
+
+        public GetBooksListParameter(int pageNumber, int pageSize)
+            : base(pageNumber, pageSize)
+        {
+        }
     }
 }
