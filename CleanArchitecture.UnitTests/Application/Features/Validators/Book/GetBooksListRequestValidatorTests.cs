@@ -1,5 +1,5 @@
-﻿using CleanArchitecture.Application.Parameters.Book;
-using CleanArchitecture.Application.Requests.BookRequests;
+﻿using CleanArchitecture.Application.Features.Parameters.Book;
+using CleanArchitecture.Application.Features.Requests.BookRequests;
 using FluentValidation.TestHelper;
 using Xunit;
 using FluentAssertions;

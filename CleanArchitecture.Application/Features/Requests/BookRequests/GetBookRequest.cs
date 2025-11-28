@@ -1,5 +1,5 @@
 ﻿using CleanArchitecture.Application.DTOs.Book;
-using CleanArchitecture.Application.Features.Books.Queries;
+using CleanArchitecture.Application.Features.CQRS.Books.Queries;
 using CleanArchitecture.Application.Wrappers;
 using MediatR;
 using System;

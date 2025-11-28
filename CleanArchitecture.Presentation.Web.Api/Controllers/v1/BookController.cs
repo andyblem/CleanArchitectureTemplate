@@ -1,8 +1,7 @@
 ﻿using Asp.Versioning;
 using CleanArchitecture.Application.DTOs.Book;
 using CleanArchitecture.Application.Features.Parameters.Book;
-using CleanArchitecture.Application.Filters;
-using CleanArchitecture.Application.Requests.BookRequests;
+using CleanArchitecture.Application.Features.Requests.BookRequests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

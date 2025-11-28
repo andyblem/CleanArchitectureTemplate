@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.DTOs.Book;
-using CleanArchitecture.Application.Features.Books.Commands;
-using CleanArchitecture.Application.Features.Books.Queries;
+using CleanArchitecture.Application.Features.CQRS.Books.Commands;
+using CleanArchitecture.Application.Features.CQRS.Books.Queries;
 using CleanArchitecture.Application.Wrappers;
 using CleanArchitecture.Domain.Entities;
 using MediatR;

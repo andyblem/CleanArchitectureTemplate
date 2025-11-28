@@ -1,7 +1,7 @@
 using CleanArchitecture.Application.DTOs.Book;
 using CleanArchitecture.Application.Features.CQRS.Books.Queries;
 using CleanArchitecture.Application.Interfaces;
-using CleanArchitecture.Application.Parameters.Book;
+using CleanArchitecture.Application.Features.Parameters.Book;
 using CleanArchitecture.Domain.Entities;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.DTOs.Account;
 using CleanArchitecture.Application.Interfaces;
-using CleanArchitecture.Application.Validators.AccountValidators;
+using CleanArchitecture.Application.Features.Validators.AccountValidators;
 using CleanArchitecture.Application.Wrappers;
 using CleanArchitecture.Infrastructure.IdentityProvider.DTOs;
 using CleanArchitecture.Infrastructure.Shared.DTOs;

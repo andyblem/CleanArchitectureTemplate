@@ -1,5 +1,5 @@
 ﻿using CleanArchitecture.Application.Features.Validators.BooksValidators;
-using CleanArchitecture.Application.Requests.BookRequests;
+using CleanArchitecture.Application.Features.Requests.BookRequests;
 using FluentAssertions;
 using FluentValidation.TestHelper;
 using System;
