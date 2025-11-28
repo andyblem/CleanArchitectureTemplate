@@ -7,6 +7,7 @@ using MailKit.Security;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
+using System;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.Infrastructure.Shared.Services
@@ -16,9 +17,12 @@ namespace CleanArchitecture.Infrastructure.Shared.Services
         public MailSettings _mailSettings { get; }
         public ILogger<EmailService> _logger { get; }
 
-        public EmailService(IOptions<MailSettings> mailSettings,ILogger<EmailService> logger)
+        public EmailService(IOptions<MailSettings> mailSettings, ILogger<EmailService> logger)
         {
-            _mailSettings = mailSettings.Value;
+            if (mailSettings == null)
+                throw new ArgumentNullException(nameof(mailSettings));
+                
+            _mailSettings = mailSettings.Value ?? throw new ArgumentNullException(nameof(mailSettings), "Mail settings cannot be null");
             _logger = logger;
         }
 
@@ -39,7 +43,6 @@ namespace CleanArchitecture.Infrastructure.Shared.Services
                 smtp.Authenticate(_mailSettings.SmtpUser, _mailSettings.SmtpPass);
                 await smtp.SendAsync(email);
                 smtp.Disconnect(true);
-
             }
             catch (System.Exception ex)
             {
