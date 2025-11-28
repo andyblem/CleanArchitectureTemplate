@@ -13,12 +13,6 @@ namespace CleanArchitecture.Infrastructure.Shared.Services
     public class FileService : IFileService
     {
         private static readonly string _rootFileFolder = "Files";
-        private readonly FileSettingsDTO _settings;
-
-        public FileService(IOptions<FileSettingsDTO> options)
-        {
-            _settings = options.Value;
-        }
 
 
         public string GeneratePathToLocation(string location)
@@ -31,6 +25,36 @@ namespace CleanArchitecture.Infrastructure.Shared.Services
 
             // return result
             return pathToLocation;
+        }
+
+        public async Task DeleteFileAsync(string fileName, string path)
+        {
+            // Create full path
+            var filePath = Path.Combine(path, fileName);
+
+            // Check if file exists and delete asynchronously
+            if (File.Exists(filePath))
+            {
+                await Task.Run(() => File.Delete(filePath));
+            }
+        }
+
+        public async Task SaveFileAsync(string fileName, string path, IFormFile file)
+        {
+            // make sure path exists
+            bool isDirectoryAvailable = Directory.Exists(path);
+            if (isDirectoryAvailable == false)
+                Directory.CreateDirectory(path);
+
+            // create full path
+            var filePath = Path.Combine(path, fileName);
+
+            // create file stream
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                // save image to storage
+                await file.CopyToAsync(fileStream);
+            }
         }
 
         public async Task<byte[]> GetFileAsByteArrayAsync(string fileName, string path)
@@ -50,24 +74,6 @@ namespace CleanArchitecture.Infrastructure.Shared.Services
             {
                 // return result
                 return Array.Empty<byte>();
-            }
-        }
-
-        public async Task SaveFileAsync(string fileName, string path, IFormFile file)
-        {
-            // make sure path exists
-            bool isDirectoryAvailable = Directory.Exists(path);
-            if (isDirectoryAvailable == false)
-                Directory.CreateDirectory(path);
-
-            // create full path
-            var filePath = Path.Combine(path, fileName);
-
-            // create file stream
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                // save image to storage
-                await file.CopyToAsync(fileStream);
             }
         }
 

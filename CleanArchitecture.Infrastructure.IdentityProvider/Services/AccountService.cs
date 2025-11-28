@@ -1,5 +1,7 @@
-﻿using CleanArchitecture.Application.DTOs.Account;
+﻿using AutoMapper;
+using CleanArchitecture.Application.DTOs.Account;
 using CleanArchitecture.Application.Interfaces;
+using CleanArchitecture.Application.Validators.AccountValidators;
 using CleanArchitecture.Application.Wrappers;
 using CleanArchitecture.Infrastructure.IdentityProvider.DTOs;
 using CleanArchitecture.Infrastructure.Shared.DTOs;
@@ -33,6 +35,7 @@ namespace CleanArchitecture.Infrastructure.IdentityProvider.Services
         private readonly IFileService _fileService;
 
         private readonly CustomUserManager<CustomIdentityUser> _customUserManager;
+    
         private readonly ILogger<AccountService> _logger;
 
 
@@ -198,132 +201,190 @@ namespace CleanArchitecture.Infrastructure.IdentityProvider.Services
             }
         }
 
-        //public async Task<Response<string>> UpdateProfileAsync(string userId)
-        //{
+        public async Task<Response<string>> UpdateProfileAsync(string userId, UpdateUserProfileDTO userProfileDTO)
+        {
+            try
+            {
+                // Validate input using FluentValidation
+                var validator = new UpdateUserProfileValidator();
+                var validationResult = await validator.ValidateAsync(userProfileDTO);
 
-        //    // check if user exists first
-        //    bool isUserAvailable = await _mediator.Send(new CheckIfUserExistsByIdQuery()
-        //    {
-        //        UserId = request.UserId,
-        //    });
+                if (!validationResult.IsValid)
+                {
+                    var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+                    return Response<string>.Failure("Validation failed", errors);
+                }
 
-        //    if (isUserAvailable == true)
-        //    {
-        //        // make user id field is set
-        //        request.UserProfileInformation.Id = request.UserId;
+                // Validate user ID
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Response<string>.Failure("User ID is required");
+                }
 
-        //        // map dto to model
-        //        var user = _mapper.Map<CustomIdentityUser>(request.UserProfileInformation);
+                // Get the existing user
+                var existingUser = await _customUserManager.FindByIdAsync(userId);
 
-        //        // update data to db
-        //        var updateUserResult = await _mediator.Send(new UpdateUserProfileInformationCommand()
-        //        {
-        //            User = user,
-        //        });
+                if (existingUser == null)
+                {
+                    return Response<string>.Failure("User not found");
+                }
 
-        //        // return result based on update result
-        //        if (updateUserResult == true)
-        //        {
-        //            return new Response<string>("User updated successfully", string.Empty);
-        //        }
-        //        else
-        //        {
-        //            // return result
-        //            return new Response<string>("Updating user failed");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        // return result
-        //        return new Response<string>("User not found");
-        //    }
+                // Update user properties
+                existingUser.UserName = userProfileDTO.UserName ?? existingUser.UserName;
+                existingUser.Email = userProfileDTO.Email ?? existingUser.Email;
+                existingUser.NormalizedUserName = userProfileDTO.UserName?.ToUpper() ?? existingUser.NormalizedUserName;
+                existingUser.NormalizedEmail = userProfileDTO.Email?.ToUpper() ?? existingUser.NormalizedEmail;
 
-        //}
+                // Update the user using CustomUserManager
+                var updateResult = await _customUserManager.UpdateAsync(existingUser);
 
-        //public class UpdateSecurityInformationRequestHandler : IRequestHandler<UpdateSecurityInformationRequest, Response<string>>
-        //{
-        //    private readonly IMediator _mediator;
-        //    private readonly CustomUserManager<CustomIdentityUser> _customUserManager;
+                if (updateResult.Succeeded)
+                {
+                    _logger.LogInformation("Profile updated successfully for user {UserId}", userId);
+                    return Response<string>.Success("Profile updated successfully", "User profile updated successfully");
+                }
+                else
+                {
+                    var errors = updateResult.Errors.Select(e => e.Description).ToList();
+                    _logger.LogWarning("Failed to update profile for user {UserId}. Errors: {Errors}", userId, string.Join(", ", errors));
 
-        //    public UpdateSecurityInformationRequestHandler(IMediator mediator, CustomUserManager<CustomIdentityUser> customUserManager)
-        //    {
-        //        _mediator = mediator;
-        //        _customUserManager = customUserManager;
-        //    }
+                    return Response<string>.Failure("Failed to update profile", errors);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating profile for user {UserId}", userId);
+                return Response<string>.Failure("An error occurred while updating the profile");
+            }
+        }
 
-        //    public async Task<Response<string>> Handle(UpdateSecurityInformationRequest request, CancellationToken cancellationToken)
-        //    {
-        //        // check if user exists first
-        //        bool isUserAvailable = await _mediator.Send(new CheckIfUserExistsByIdQuery()
-        //        {
-        //            UserId = request.UserId,
-        //        });
+        public async Task<Response<string>> UpdateSecurityInformationAsync(string userId, UpdateUserSecurityDTO userSecurityDTO)
+        {
+            try
+            {
+                // Validate input using FluentValidation
+                var validator = new UpdateUserSecurityValidator();
+                var validationResult = await validator.ValidateAsync(userSecurityDTO);
 
-        //        if (isUserAvailable == true)
-        //        {
-        //            // map dto to model
-        //            var user = await _customUserManager.FindByIdAsync(request.UserId);
+                if (!validationResult.IsValid)
+                {
+                    var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+                    return Response<string>.Failure("Validation failed", errors);
+                }
 
-        //            // update data to db
-        //            var updateUserResult = await _customUserManager.ChangePasswordAsync(
-        //                user,
-        //                request.UserSecurityInformation.CurrentPassword,
-        //                request.UserSecurityInformation.NewPassword);
+                // Validate user ID
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Response<string>.Failure("User ID is required");
+                }
 
-        //            // return result based on update result
-        //            if (updateUserResult.Succeeded == true)
-        //            {
-        //                return new Response<string>("User updated successfully", string.Empty);
-        //            }
-        //            else
-        //            {
-        //                // return result
-        //                return new Response<string>(updateUserResult.Errors.ToString());
-        //            }
-        //        }
-        //        else
-        //        {
-        //            // return result
-        //            return new Response<string>("User not found");
-        //        }
-        //    }
-        //}
+                // Get the existing user directly using CustomUserManager
+                var existingUser = await _customUserManager.FindByIdAsync(userId);
 
-        //public async Task<Response<string>> Handle(UploadProfilePictureRequest request, CancellationToken cancellationToken)
-        //{
-        //    // create path to directory
-        //    string pathToDirectory = FileService.GeneratePathToLocation(_fileSettings.ProfilePicturesLocation);
+                if (existingUser == null)
+                {
+                    return Response<string>.Failure("User not found");
+                }
 
-        //    // create file name
-        //    string fileName = string.Format("P{0}{1}",
-        //        request.ProfilePicture.Id,
-        //        Path.GetExtension(request.ProfilePicture.ProfilePicture.FileName).ToLowerInvariant());
+                // Update user password using CustomUserManager
+                var changePasswordResult = await _customUserManager.ChangePasswordAsync(
+                    existingUser,
+                    userSecurityDTO.CurrentPassword,
+                    userSecurityDTO.NewPassword);
 
-        //    // save file to storage
-        //    await FileService.SaveFileToPathAsync(fileName, pathToDirectory, request.ProfilePicture.ProfilePicture);
+                if (changePasswordResult.Succeeded)
+                {
+                    _logger.LogInformation("Password changed successfully for user {UserId}", userId);
+                    return Response<string>.Success("Password updated successfully", "User password changed successfully");
+                }
+                else
+                {
+                    var errors = changePasswordResult.Errors.Select(e => e.Description).ToList();
+                    _logger.LogWarning("Failed to change password for user {UserId}. Errors: {Errors}", userId, string.Join(", ", errors));
 
-        //    // get saved file
-        //    var imageBytes = await FileService.GetFileAsByteArray(fileName, pathToDirectory);
+                    return Response<string>.Failure("Failed to change password", errors);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error changing password for user {UserId}", userId);
+                return Response<string>.Failure("An error occurred while changing the password");
+            }
+        }
 
-        //    // convert image to base 64
-        //    string imageString = Convert.ToBase64String(imageBytes);
+        public async Task<Response<string>> UploadProfilePictureAsync(string userId, UploadProfilePictureDTO uploadProfilePictureDTO)
+        {
+            try
+            {
+                // Validate input using FluentValidation
+                var validator = new UploadProfilePictureValidator();
+                var validationResult = await validator.ValidateAsync(uploadProfilePictureDTO);
 
-        //    // save record for user
-        //    var user = await _userManager.FindByIdAsync(request.ProfilePicture.Id);
-        //    user.ProfilePicture = fileName;
-        //    var saveProfilePictureNameResult = await _userManager.UpdateAsync(user);
+                if (!validationResult.IsValid)
+                {
+                    var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+                    return Response<string>.Failure("Validation failed", errors);
+                }
 
-        //    // return result based on identity result
-        //    if (saveProfilePictureNameResult.Succeeded)
-        //    {
-        //        // return result
-        //        return new Response<string>(imageString, "Image saved successfuly");
-        //    }
-        //    else
-        //    {
-        //        // return result
-        //        return new Response<string>("Uploading image failed");
-        //    }
-        //}
+                // Validate user ID
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Response<string>.Failure("User ID is required");
+                }
+
+                // Get the existing user
+                var existingUser = await _customUserManager.FindByIdAsync(userId);
+                if (existingUser == null)
+                {
+                    return Response<string>.Failure("User not found");
+                }
+
+                // Create path to directory
+                string pathToDirectory = _fileService.GeneratePathToLocation(_fileSettings.ProfilePicturesLocation);
+
+                // Create unique file name to prevent conflicts
+                string fileExtension = Path.GetExtension(uploadProfilePictureDTO.ProfilePicture.FileName).ToLowerInvariant();
+                string fileName = string.Format("P{0}{1}", userId, fileExtension);
+
+                // Save file to storage
+                await _fileService.SaveFileAsync(fileName, pathToDirectory, uploadProfilePictureDTO.ProfilePicture);
+
+                // Get saved file and convert to base64
+                var imageBytes = await _fileService.GetFileAsByteArrayAsync(fileName, pathToDirectory);
+                string imageString = Convert.ToBase64String(imageBytes);
+
+                // Update user's profile picture reference
+                existingUser.ProfilePicture = fileName;
+                var updateResult = await _customUserManager.UpdateAsync(existingUser);
+
+                if (updateResult.Succeeded)
+                {
+                    _logger.LogInformation("Profile picture uploaded successfully for user {UserId}", userId);
+                    return Response<string>.Success(imageString, "Profile picture uploaded successfully");
+                }
+                else
+                {
+                    // If user update failed, try to clean up the uploaded file
+                    try
+                    {
+                        await _fileService.DeleteFileAsync(fileName, pathToDirectory);
+                    }
+                    catch (Exception cleanupEx)
+                    {
+                        _logger.LogError(cleanupEx, "Failed to cleanup uploaded file {FileName} after user update failure for user {UserId}", fileName, userId);
+                    }
+
+                    var errors = updateResult.Errors.Select(e => e.Description).ToList();
+                    _logger.LogWarning("Failed to update user profile picture reference for user {UserId}. Errors: {Errors}", userId, string.Join(", ", errors));
+
+                    return Response<string>.Failure("Failed to save profile picture reference", errors);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error uploading profile picture for user {UserId}", userId);
+                return Response<string>.Failure("An error occurred while uploading the profile picture");
+            }
+        }
     }
 }

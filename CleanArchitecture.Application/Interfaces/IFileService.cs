@@ -7,7 +7,9 @@ namespace CleanArchitecture.Application.Interfaces
     {
         string GeneratePathToLocation(string relativePath);
 
-        Task<byte[]> GetFileAsByteArrayAsync(string fileName, string pathToDirectory);
+        Task DeleteFileAsync(string fileName, string path);
         Task SaveFileAsync(string fileName, string path, IFormFile file);
+
+        Task<byte[]> GetFileAsByteArrayAsync(string fileName, string path);
     }
 }
