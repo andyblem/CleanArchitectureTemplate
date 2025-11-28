@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="Application\Wrappers\" />
+    <Folder Include="Common\" />
   </ItemGroup>
 
   <ItemGroup>
