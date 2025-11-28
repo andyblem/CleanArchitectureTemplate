@@ -1,8 +1,6 @@
 ﻿using CleanArchitecture.Application.Behaviours;
 using CleanArchitecture.Application.Exceptions;
-using CleanArchitecture.Application.Requests.BookRequests;
 using CleanArchitecture.Application.Wrappers;
-using CleanArchitecture.Application.DTOs.Book;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
@@ -15,6 +13,8 @@ using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
 using ValidationException = CleanArchitecture.Application.Exceptions.ValidationException;
+using CleanArchitecture.Application.Features.Requests.BookRequests;
+using CleanArchitecture.Application.DTOs.Book;
 
 namespace CleanArchitecture.UnitTests.Application.Behaviors
 {

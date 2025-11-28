@@ -1,0 +1,51 @@
+﻿using CleanArchitecture.Application.Interfaces;
+using CleanArchitecture.Application.Wrappers;
+using CleanArchitecture.Domain.Entities;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace CleanArchitecture.Application.Features.CQRS.Books.Queries
+{
+    public class IsUniqueISBNQuery : IRequest<Response<bool>>
+    {
+        public string ISBN { get; set; }
+    }
+
+    public class IsUniqueISBNHandler : IRequestHandler<IsUniqueISBNQuery, Response<bool>>
+    {
+        private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<IsUniqueISBNHandler> _logger;
+
+        public IsUniqueISBNHandler(IApplicationDbContext dbContext, ILogger<IsUniqueISBNHandler> logger)
+        {
+            _dbContext = dbContext;
+            _logger = logger;
+        }
+
+        public async Task<Response<bool>> Handle(IsUniqueISBNQuery request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                // check if ISBN is unique
+                bool isUnique = !await _dbContext.Books
+                    .AnyAsync(p => p.ISBN == request.ISBN);
+
+                // return response
+                return Response<bool>.Success(isUnique, isUnique ? "ISBN is unique." : "ISBN already exists.");
+            }
+            catch (Exception ex)
+            {
+                // log error
+                _logger.LogError(ex, "Error checking unique ISBN.");
+                return Response<bool>.Failure("Error checking unique ISBN.", new List<string> { ex.Message });
+            }
+        }
+    }
+}
