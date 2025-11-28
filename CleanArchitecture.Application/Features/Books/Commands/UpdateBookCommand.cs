@@ -20,10 +20,10 @@ namespace CleanArchitecture.Application.Features.Books.Commands
     public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand, Response<int>>
     {
         private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<DeleteBookCommandHandler> _logger;
+        private readonly ILogger<UpdateBookCommandHandler> _logger;
 
 
-        public UpdateBookCommandHandler(IApplicationDbContext dbContext, ILogger<DeleteBookCommandHandler> logger)
+        public UpdateBookCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateBookCommandHandler> logger)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -42,7 +42,7 @@ namespace CleanArchitecture.Application.Features.Books.Commands
                 _dbContext.Books.Entry(book).Property(p => p.Title).IsModified = true;
 
                 // save changes
-                await _dbContext.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync(cancellationToken);
 
                 // return result
                 return Response<int>.Success(book.Id, "Book updated successfully");
