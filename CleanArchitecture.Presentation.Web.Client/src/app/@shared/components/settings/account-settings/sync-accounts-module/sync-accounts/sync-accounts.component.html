@@ -1,0 +1,68 @@
+<h6 class="card-title">EPL Fantasy</h6>
+
+<!--space-->
+<div class="mb-3"></div>
+
+<div class="mb-3 mt-3">
+    <div class="flex align-content-start justify-content-between flex-wrap">
+        <span class="flex align-items-center justify-content-center text-red-500">
+            Account not linked
+        </span>
+        <p-button icon="pi pi-plus"
+                  pTooltip="Link with account"
+                  size="small"
+                  (onClick)="isVisible = true">
+        </p-button>
+    </div>
+</div>
+
+<p-dialog header="Link Accounts"
+          [modal]="true"
+          [(visible)]="isVisible"
+          [style]="{ width: '30rem' }">
+
+    <!--space-->
+    <div class="mb-3"></div>
+
+    <!--form-->
+    <form class="mb-5" [formGroup]="syncAccountsForm">
+        <div class="p-fluid">
+            <div class="field grid">
+                <label for="email"
+                       class="col-2 mb-0">
+                    Email
+                </label>
+                <div class="col-10">
+                    <input pInputText
+                           formControlName="email"
+                           placeholder="Email"
+                           id="username"
+                           class="flex-auto"
+                           autocomplete="off" />
+                </div>
+            </div>
+
+            <div class="field grid">
+                <label for="password"
+                       class="col-12 mb-2 md:col-2 md:mb-0">
+                    Password
+                </label>
+                <div class="col-12 md:col-10">
+                    <p-password id="password"
+                                class="flex-auto"
+                                formControlName="password"
+                                placeholder="Password">
+                    </p-password>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <!--footer-->
+    <ng-template pTemplate="footer">
+        <p-button label="Cancel" severity="secondary" (onClick)="onClickCancel()" />
+        <p-button label="Save" (onClick)="onClickSave()" />
+    </ng-template>
+</p-dialog>
+

@@ -1,0 +1,45 @@
+/* You can add global styles to this file, and also import other style files */
+
+$gutter: 1rem; //for primeflex grid system
+@import "assets/layout/styles/layout/layout.scss";
+
+/* PrimeNG */
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../node_modules/primeflex/primeflex.scss";
+@import "../node_modules/primeicons/primeicons.css";
+
+/* Demos */
+@import "assets/demo/styles/flags/flags.css";
+@import "assets/demo/styles/badges.scss";
+@import "assets/demo/styles/code.scss";
+
+
+.card-title {
+    margin-bottom: .75rem;
+}
+
+.card-subtitle {
+    margin-top: -.375rem;
+    margin-bottom: 0;
+}
+
+.card-body {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+
+.form-section {
+}
+
+.form-section-header {
+    border-bottom: 1px solid #666;
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding-bottom: 5px;
+}
+
+.form-section-body {
+    padding-top: 10px;
+}

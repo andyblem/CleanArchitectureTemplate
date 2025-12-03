@@ -1,0 +1,146 @@
+<ng-container *ngIf="isInitializing == true; else isInitializedTemplate">
+    <app-page-loading></app-page-loading>
+</ng-container>
+
+<ng-template #isInitializedTemplate>
+
+    <!--entity-menu-->
+    <app-entity-menu>
+        <ng-template #brand>
+            Vehicle  Details
+        </ng-template>
+
+        <ng-template #items>
+            <p-button label="Back"
+                      icon="pi pi-angle-left"
+                      pTooltip="Back to list"
+                      tooltipPosition="bottom"
+                      [text]="true"
+                      (onClick)="onClickBack()" />
+        </ng-template>
+    </app-entity-menu>
+
+    <div class="pt-3"></div>
+
+    <!--content-->
+    <div class="card">
+        
+        <p-tabView>
+            <p-tabPanel>
+                <ng-template pTemplate="header">
+                    <span class="text-lg mr-5">Basic Details</span>
+                </ng-template>
+                <form [formGroup]="viewVehicleForm">
+        
+                    <input pInputText
+                        id="id"
+                        formControlName="id"
+                        type="hidden" />
+        
+                    <div class="grid p-fluid">
+                        <div class="field col-12">
+                            <label class="font-medium" htmlFor="name">Registration Number</label>
+                            <input pInputText
+                                    id="registrationNumber"
+                                    formControlName="registrationNumber"
+                                    type="text"
+                                    [ngClass]="{'ng-dirty ng-invalid': viewVehicleForm.get('registrationNumber')?.invalid && viewVehicleForm.get('registrationNumber')?.touched}" />
+                            <small class="text-red-700" *ngIf="viewVehicleForm.get('registrationNumber')?.invalid && viewVehicleForm.get('registrationNumber')?.touched">
+                                {{ getErrorMessage('registrationNumber') }}
+                            </small>
+                        </div>
+                    </div>
+        
+                    <div class="grid p-fluid">
+                        <div class="field col-12 md:col-6">
+                            <label class="font-medium" htmlFor="vehicleMakeId">Vehicle Make</label>
+                            <p-dropdown 
+                                formControlName="vehicleMakeId"
+                                placeholder="Select Vehicle Make"
+                                [appendTo]="'body'"
+                                [filter]="true"
+                                [options]="vehicleMakeOptions" 
+                                [showClear]="true"
+                                [ngClass]="{'ng-dirty ng-invalid': viewVehicleForm.get('vehicleMakeId')?.invalid && viewVehicleForm.get('vehicleMakeId')?.touched}"
+                                (onChange)="onVehicleMakeChange($event)" />
+                            <small class="text-red-700" *ngIf="viewVehicleForm.get('vehicleMakeId')?.invalid && viewVehicleForm.get('vehicleMakeId')?.touched">
+                                {{ getErrorMessage('vehicleMakeId') }}
+                            </small>
+                        </div>
+                        <div class="field col-12 md:col-6">
+                            <label class="font-medium" htmlFor="vehicleMakeId">Vehicle Model</label>
+                            <p-dropdown 
+                                formControlName="vehicleModelId"
+                                placeholder="Select Vehicle Model"
+                                [appendTo]="'body'"
+                                [filter]="true"
+                                [options]="vehicleModelOptions" 
+                                [showClear]="true"
+                                [ngClass]="{'ng-dirty ng-invalid': viewVehicleForm.get('vehicleModelId')?.invalid && viewVehicleForm.get('vehicleModelId')?.touched}" />
+                            <small class="text-red-700" *ngIf="viewVehicleForm.get('vehicleModelId')?.invalid && viewVehicleForm.get('vehicleModelId')?.touched">
+                                {{ getErrorMessage('vehicleModelId') }}
+                            </small>
+                        </div>
+                    </div>
+        
+                    <div class="grid p-fluid">
+                        <div class="field col-12 md:col-6">
+                            <label class="font-medium" htmlFor="purchaseAmount">Purchase Amount</label>
+                            <p-inputNumber id="purchaseAmount"
+                                    formControlName="purchaseAmount"
+                                    type="text"
+                                    mode="currency" 
+                                    currency="USD" 
+                                    locale="en-US"
+                                    [ngClass]="{'ng-dirty ng-invalid': viewVehicleForm.get('purchaseAmount')?.invalid && viewVehicleForm.get('purchaseAmount')?.touched}" />
+                            <small class="text-red-700" *ngIf="viewVehicleForm.get('purchaseAmount')?.invalid && viewVehicleForm.get('purchaseAmount')?.touched">
+                                {{ getErrorMessage('purchaseAmount') }}
+                            </small>
+                        </div>
+                        <div class="field col-12 md:col-6">
+                            <label class="font-medium" htmlFor="purchaseDate">Purchase Date</label>
+                            <p-calendar formControlName="purchaseDate"
+                                        dateFormat="dd-M-yy"
+                                        [showButtonBar]="true" />
+                            <small class="text-red-700" *ngIf="viewVehicleForm.get('purchaseDate')?.invalid && viewVehicleForm.get('purchaseDate')?.touched">
+                                {{ getErrorMessage('purchaseDate') }}
+                            </small>
+                        </div>
+                    </div>
+                </form>
+        
+                <div class="flex justify-content-end flex-wrap">
+                    <p-button label="Update"
+                              icon="pi pi-save"
+                              pTooltip="Update record"
+                              tooltipPosition="bottom"
+                              (onClick)="onClickSave()" />
+                </div>
+            </p-tabPanel>
+            <p-tabPanel>
+                <ng-template pTemplate="header">
+                    <span class="text-lg mr-5">Maintance Rules</span>
+                </ng-template>
+                <p>
+                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim
+                    ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
+                </p>
+            </p-tabPanel>
+            <p-tabPanel>
+                <ng-template pTemplate="header">
+                    <span class="text-lg mr-5">Business Rules</span>
+                </ng-template>
+                <p>
+                    At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa
+                    qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
+                </p>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+</ng-template>
+
+<!--page processing-->
+<app-page-processing *ngIf="isBusy"></app-page-processing>
+
+<!--toast-->
+<p-toast></p-toast>

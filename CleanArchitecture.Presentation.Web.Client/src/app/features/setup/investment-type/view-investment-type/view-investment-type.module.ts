@@ -1,0 +1,33 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { ViewInvestmentTypeRoutingModule } from './view-investment-type-routing.module';
+import { ViewInvestmentTypeComponent } from './view-investment-type/view-investment-type.component';
+import { EntityMenuComponentModule } from 'src/app/@shared/components/shared/entity-menu-component-module/entity-menu-component.module';
+import { PageLoadingComponentModule } from 'src/app/@shared/components/shared/page-loading-component-module/page-loading-component.module';
+import { PageProcessingComponentModule } from 'src/app/@shared/components/shared/page-processing-component-module/page-processing-component.module';
+import { ButtonModule } from 'primeng/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+
+
+@NgModule({
+  declarations: [
+    ViewInvestmentTypeComponent
+  ],
+  imports: [
+    CommonModule,
+    ViewInvestmentTypeRoutingModule,
+    ReactiveFormsModule,
+    
+    EntityMenuComponentModule,
+    PageLoadingComponentModule,
+    PageProcessingComponentModule,
+    
+    ButtonModule,
+    InputTextModule,
+    ToastModule,
+  ]
+})
+export class ViewInvestmentTypeModule { }

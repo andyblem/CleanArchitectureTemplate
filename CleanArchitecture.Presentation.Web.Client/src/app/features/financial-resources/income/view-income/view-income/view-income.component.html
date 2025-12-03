@@ -1,0 +1,114 @@
+<ng-container *ngIf="isInitializing == true; else isInitializedTemplate">
+    <app-page-loading></app-page-loading>
+</ng-container>
+
+<ng-template #isInitializedTemplate>
+
+    <!--entity-menu-->
+    <app-entity-menu>
+        <ng-template #brand>
+            Income Details
+        </ng-template>
+
+        <ng-template #items>
+            <p-button label="Back"
+                      icon="pi pi-angle-left"
+                      pTooltip="Back to list"
+                      tooltipPosition="bottom"
+                      [text]="true"
+                      (onClick)="onClickBack()" />
+        </ng-template>
+    </app-entity-menu>
+
+    <div class="pt-3"></div>
+
+    <!--content-->
+    <div class="card">
+        <form [formGroup]="viewIncomeForm">
+
+            <input pInputText
+                id="id"
+                formControlName="id"
+                type="hidden" />
+
+            <div class="p-fluid p-formgrid grid">
+                <div class="field col-12">
+                    <label class="font-medium" htmlFor="name">Amount</label>
+                    <p-inputNumber
+                            id="amount"
+                            formControlName="amount"
+                            mode="currency" 
+                            currency="USD" 
+                            locale="en-US"
+                            placeholder="0.00"
+                            [ngClass]="{'ng-dirty ng-invalid': viewIncomeForm.get('amount')?.invalid && viewIncomeForm.get('amount')?.touched}" />
+                    <small class="text-red-700" *ngIf="viewIncomeForm.get('amount')?.invalid && viewIncomeForm.get('amount')?.touched">
+                        {{ getErrorMessage('amount') }}
+                    </small>
+                </div>
+            </div>
+
+            <div class="p-fluid p-formgrid grid">
+                <div class="field col-12">
+                    <label class="font-medium" htmlFor="incomeTypeId">Type</label>
+                    <p-dropdown id="incomeTypeId"
+                            formControlName="incomeTypeId"
+                            placeholder="Select Income Type"
+                            [appendTo]="'body'"
+                            [filter]="true" 
+                            [options]="icomeTypeOptions"
+                            [showClear]="true" 
+                            [ngClass]="{'ng-dirty ng-invalid': viewIncomeForm.get('incomeTypeId')?.invalid && viewIncomeForm.get('incomeTypeId')?.touched}" />
+                    <small class="text-red-700" *ngIf="viewIncomeForm.get('incomeTypeId')?.invalid && viewIncomeForm.get('incomeTypeId')?.touched">
+                        {{ getErrorMessage('incomeTypeId') }}
+                    </small>
+                </div>
+            </div>
+
+            <div class="p-fluid p-formgrid grid">
+                <div class="field col-12">
+                    <label class="font-medium" htmlFor="vehicleId">Vehicle</label>
+                    <p-dropdown id="vehicleId"
+                            formControlName="vehicleId"
+                            placeholder="Select Vehicle"
+                            [appendTo]="'body'"
+                            [filter]="true" 
+                            [options]="vehicleOptions"
+                            [showClear]="true" 
+                            [ngClass]="{'ng-dirty ng-invalid': viewIncomeForm.get('vehicleId')?.invalid && viewIncomeForm.get('vehicleId')?.touched}" />
+                    <small class="text-red-700" *ngIf="viewIncomeForm.get('vehicleId')?.invalid && viewIncomeForm.get('vehicleId')?.touched">
+                        {{ getErrorMessage('vehicleId') }}
+                    </small>
+                </div>
+            </div>
+
+            <div class="p-fluid p-formgrid grid">
+                <div class="field col-12">
+                    <label class="font-medium" htmlFor="name">Date</label>
+                    <p-calendar id="date"
+                            dateFormat="dd-M-yy"
+                            formControlName="date"
+                            [appendTo]="'body'"
+                            [ngClass]="{'ng-dirty ng-invalid': viewIncomeForm.get('date')?.invalid && viewIncomeForm.get('date')?.touched}" />
+                    <small class="text-red-700" *ngIf="viewIncomeForm.get('date')?.invalid && viewIncomeForm.get('date')?.touched">
+                        {{ getErrorMessage('date') }}
+                    </small>
+                </div>
+            </div>
+        </form>
+
+        <div class="flex justify-content-end flex-wrap">
+            <p-button label="Update"
+                      icon="pi pi-save"
+                      pTooltip="Update record"
+                      tooltipPosition="bottom"
+                      (onClick)="onClickSave()" />
+        </div>
+    </div>
+</ng-template>
+
+<!--page processing-->
+<app-page-processing *ngIf="isBusy"></app-page-processing>
+
+<!--toast-->
+<p-toast></p-toast>

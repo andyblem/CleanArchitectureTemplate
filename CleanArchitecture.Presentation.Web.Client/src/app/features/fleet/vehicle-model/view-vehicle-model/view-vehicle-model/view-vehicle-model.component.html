@@ -1,0 +1,206 @@
+<ng-container *ngIf="isInitializing == true; else isInitializedTemplate">
+    <app-page-loading></app-page-loading>
+</ng-container>
+
+<ng-template #isInitializedTemplate>
+
+    <!--entity-menu-->
+    <app-entity-menu>
+        <ng-template #brand>
+            Vehicle Model Details
+        </ng-template>
+
+        <ng-template #items>
+            <p-button label="Back"
+                      icon="pi pi-angle-left"
+                      pTooltip="Back to list"
+                      tooltipPosition="bottom"
+                      [text]="true"
+                      (onClick)="onClickBack()" />
+        </ng-template>
+    </app-entity-menu>
+
+    <div class="pt-3"></div>
+
+    <!--content-->
+    <div class="card">
+
+        <p-tabView styleClass="tabview-custom">
+            <p-tabPanel>
+                <ng-template pTemplate="header">
+                    <span class="text-lg mr-5">Basic Details</span>
+                </ng-template>
+                <form [formGroup]="viewVehicleModelForm">
+        
+                    <input pInputText
+                        id="id"
+                        formControlName="id"
+                        type="hidden" />
+        
+                    <div class="p-fluid p-formgrid grid">
+                        <div class="field col-12">
+                            <label class="font-medium" htmlFor="name">Name</label>
+                            <input pInputText
+                                id="name"
+                                formControlName="name"
+                                type="text"
+                                [ngClass]="{'ng-dirty ng-invalid': viewVehicleModelForm.get('name')?.invalid && viewVehicleModelForm.get('name')?.touched}" />
+                            <small class="text-red-700" *ngIf="viewVehicleModelForm.get('name')?.invalid && viewVehicleModelForm.get('name')?.touched">
+                                {{ getErrorMessage('name') }}
+                            </small>
+                        </div>
+                    </div>
+        
+                    <div class="p-fluid p-formgrid grid">
+                        <div class="field col-12 md:col-6">
+                            <label class="font-medium" htmlFor="vehicleMakeId">Vehicle Make</label>
+                            <p-dropdown 
+                                formControlName="vehicleMakeId"
+                                placeholder="Select Vehicle Make"
+                                [appendTo]="'body'"
+                                [filter]="true"
+                                [options]="vehicleMakeOptions" 
+                                [showClear]="true"
+                                [ngClass]="{'ng-dirty ng-invalid': viewVehicleModelForm.get('vehicleMakeId')?.invalid && viewVehicleModelForm.get('vehicleMakeId')?.touched}" />
+                            <small class="text-red-700" *ngIf="viewVehicleModelForm.get('vehicleMakeId')?.invalid && viewVehicleModelForm.get('vehicleMakeId')?.touched">
+                                {{ getErrorMessage('name') }}
+                            </small>
+                        </div>
+                        <div class="field col-12 md:col-6">
+                            <label class="font-medium" htmlFor="vehicleTypeId">Vehicle Type</label>
+                            <p-dropdown 
+                                formControlName="vehicleTypeId"
+                                placeholder="Select Vehicle Type"
+                                [appendTo]="'body'"
+                                [filter]="true"
+                                [options]="vehicleTypeOptions" 
+                                [showClear]="true"
+                                [ngClass]="{'ng-dirty ng-invalid': viewVehicleModelForm.get('vehicleTypeId')?.invalid && viewVehicleModelForm.get('vehicleTypeId')?.touched}" />
+                            <small class="text-red-700" *ngIf="viewVehicleModelForm.get('vehicleTypeId')?.invalid && viewVehicleModelForm.get('vehicleTypeId')?.touched">
+                                {{ getErrorMessage('name') }}
+                            </small>
+                        </div>
+                    </div>
+                </form>
+        
+                <div class="flex justify-content-end flex-wrap">
+                    <p-button label="Update"
+                              icon="pi pi-save"
+                              pTooltip="Update record"
+                              tooltipPosition="bottom"
+                              (onClick)="onClickSave()" />
+                </div>
+            </p-tabPanel>
+
+            <p-tabPanel>
+                <ng-template pTemplate="header">
+                    <span class="text-lg mr-5">Maintanance Rules</span>
+                </ng-template>
+                <form>
+        
+                    <input pInputText
+                        id="id"
+                        formControlName="id"
+                        type="hidden" />
+                    
+                    <div class="grid">
+                        <div class="col-6">
+                            <span class="font-medium text-xl">ATF Details</span>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-fluid p-formgrid grid">
+                                <div class="field col-12 mb-0 pb-0">
+                                    <label class="font-medium" htmlFor="name">ATF</label>
+                                    <input pInputText
+                                        id="atf"
+                                        type="text" />
+                                </div>
+                                <div class="field col-12 mb-0 pb-0">
+                                    <label class="font-medium" htmlFor="name">Mileage</label>
+                                    <input pInputText
+                                        id="coolant"
+                                        type="text" />
+                                </div>
+                                <div class="field col-12 mb-0 pb-0">
+                                    <label class="font-medium" htmlFor="name">Time Interval</label>
+                                    <input pInputText
+                                        id="oil"
+                                        type="text" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="grid">
+                        <div class="col-6">
+                            <span class="font-medium text-xl">Coolant Details</span>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-fluid p-formgrid grid">
+                                <div class="field col-12 mb-0 pb-0">
+                                    <label class="font-medium" htmlFor="name">ATF</label>
+                                    <input pInputText
+                                        id="atf"
+                                        type="text" />
+                                </div>
+                                <div class="field col-12 mb-0 pb-0">
+                                    <label class="font-medium" htmlFor="name">Mileage</label>
+                                    <input pInputText
+                                        id="coolant"
+                                        type="text" />
+                                </div>
+                                <div class="field col-12 mb-0 pb-0">
+                                    <label class="font-medium" htmlFor="name">Time Interval</label>
+                                    <input pInputText
+                                        id="oil"
+                                        type="text" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="grid">
+                        <div class="col-6">
+                            <span class="font-medium text-xl">Oil Details</span>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-fluid p-formgrid grid">
+                                <div class="field col-12 mb-0 pb-0">
+                                    <label class="font-medium" htmlFor="name">ATF</label>
+                                    <input pInputText
+                                        id="atf"
+                                        type="text" />
+                                </div>
+                                <div class="field col-12 mb-0 pb-0">
+                                    <label class="font-medium" htmlFor="name">Mileage</label>
+                                    <input pInputText
+                                        id="coolant"
+                                        type="text" />
+                                </div>
+                                <div class="field col-12 mb-0 pb-0">
+                                    <label class="font-medium" htmlFor="name">Time Interval</label>
+                                    <input pInputText
+                                        id="oil"
+                                        type="text" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+        
+                <div class="flex justify-content-end flex-wrap">
+                    <p-button label="Update"
+                              icon="pi pi-save"
+                              pTooltip="Update record"
+                              tooltipPosition="bottom" />
+                </div>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+</ng-template>
+
+<!--page processing-->
+<app-page-processing *ngIf="isBusy"></app-page-processing>
+
+<!--toast-->
+<p-toast></p-toast>

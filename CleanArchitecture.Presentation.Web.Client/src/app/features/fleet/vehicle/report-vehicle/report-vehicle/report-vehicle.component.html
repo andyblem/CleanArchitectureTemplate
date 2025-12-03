@@ -1,0 +1,135 @@
+
+<!--page initializing-->
+<ng-container *ngIf="isInitializing == true; else isInitializedTemplate">
+    <app-page-loading></app-page-loading>
+</ng-container>
+
+<!--content-->
+<ng-template #isInitializedTemplate>
+
+     <!--entity-menu-->
+     <app-entity-menu>
+        <ng-template #brand>
+            Vehicle Report
+        </ng-template>
+
+        <ng-template #items>
+            <p-button label="Back"
+                      icon="pi pi-angle-left"
+                      pTooltip="Back to list"
+                      tooltipPosition="bottom"
+                      [text]="true"
+                      (onClick)="onClickBack()" />
+            <p-button label="Refresh"
+                      icon="pi pi-refresh"
+                      pTooltip="refresh report"
+                      tooltipPosition="bottom"
+                      (onClick)="onClickRefresh()" />
+        </ng-template>
+    </app-entity-menu>
+
+    <div class="pt-3"></div>
+
+    <div class="grid">
+        <div class="col-12 lg:col-6 xl:col-3">
+            <div class="card mb-0">
+                <div class="flex justify-content-between mb-3">
+                    <div>
+                        <span class="block text-500 font-medium mb-3">Avg Cost</span>
+                        <div class="text-900 font-medium text-xl">{{ vehicleReport?.data?.averageCostDetails?.averageCost | currency }}</div>
+                    </div>
+                    <div class="flex align-items-center justify-content-center bg-pink-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                        <i class="pi pi-dollar text-pink-500 text-xl"></i>
+                    </div>
+                </div>
+                <span class="text-green-500 font-medium">{{ vehicleReport?.data?.averageCostDetails?.lastCost | currency }} </span>
+                <span class="text-500">last cost</span>
+            </div>
+        </div>
+        <div class="col-12 lg:col-6 xl:col-3">
+            <div class="card mb-0">
+                <div class="flex justify-content-between mb-3">
+                    <div>
+                        <span class="block text-500 font-medium mb-3">Avg Income</span>
+                        <div class="text-900 font-medium text-xl">{{ vehicleReport?.data?.averageIncomeDetails?.averageIncome | currency }}</div>
+                    </div>
+                    <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                        <i class="pi pi-dollar text-blue-500 text-xl"></i>
+                    </div>
+                </div>
+                <span class="text-green-500 font-medium">{{ vehicleReport?.data?.averageIncomeDetails?.lastIncome | currency }} </span>
+                <span class="text-500">last income</span>
+            </div>
+        </div>
+        <div class="col-12 lg:col-6 xl:col-3">
+            <div class="card mb-0">
+                <div class="flex justify-content-between mb-3">
+                    <div>
+                        <span class="block text-500 font-medium mb-3">Total Cost</span>
+                        <div class="text-900 font-medium text-xl">{{ vehicleReport?.data?.costDetails?.totalCost | currency }}</div>
+                    </div>
+                    <div class="flex align-items-center justify-content-center bg-pink-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                        <i class="pi pi-dollar text-pink-500 text-xl"></i>
+                    </div>
+                </div>
+                <span class="text-green-500 font-medium">{{ vehicleReport?.data?.costDetails?.maintananceCost | currency }} </span>
+                <span class="text-500">Maintance costs</span>
+            </div>
+        </div>
+        <div class="col-12 lg:col-6 xl:col-3">
+            <div class="card mb-0">
+                <div class="flex justify-content-between mb-3">
+                    <div>
+                        <span class="block text-500 font-medium mb-3">Total Income</span>
+                        <div class="text-900 font-medium text-xl">{{ vehicleReport?.data?.incomeDetails?.totalIncome | currency }}</div>
+                    </div>
+                    <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                        <i class="pi pi-dollar text-blue-500 text-xl"></i>
+                    </div>
+                </div>
+                <span class="text-green-500 font-medium">{{ vehicleReport?.data?.incomeDetails?.primaryIncome | currency }} </span>
+                <span class="text-500">Primary income</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="col-12 md:col-6">
+            <div class="card mb-0">
+                <span class="font-medium text-xl">Last incomes</span>
+                <p-chart type="bar" 
+                    [data]="incomeData" 
+                    [options]="incomeOptions">
+                </p-chart>
+            </div>
+        </div>
+        <div class="col-12 md:col-6">
+            <div class="card mb-0">
+                <span class="font-medium text-xl">Last costs</span>
+                <p-chart type="bar" 
+                    [data]="costData" 
+                    [options]="costOptions">
+                </p-chart>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="col-12">
+            <div class="card mb-0">
+                <span class="font-medium text-xl">Progress</span>
+                <p-chart type="bar" 
+                    [data]="progressData" 
+                    [options]="progressOptions">
+                </p-chart>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+
+<!--page processing-->
+<app-page-processing *ngIf="isBusy"></app-page-processing>
+
+<!--toast-->
+<p-toast></p-toast>

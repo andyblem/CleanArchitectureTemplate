@@ -1,0 +1,63 @@
+<ng-container *ngIf="isInitializing == true; else isInitializedTemplate">
+    <app-page-loading></app-page-loading>
+</ng-container>
+
+<ng-template #isInitializedTemplate>
+
+    <!--entity-menu-->
+    <app-entity-menu>
+        <ng-template #brand>
+            Investment Type Details
+        </ng-template>
+
+        <ng-template #items>
+            <p-button label="Back"
+                      icon="pi pi-angle-left"
+                      pTooltip="Back to list"
+                      tooltipPosition="bottom"
+                      [text]="true"
+                      (onClick)="onClickBack()" />
+        </ng-template>
+    </app-entity-menu>
+
+    <div class="pt-3"></div>
+
+    <!--content-->
+    <div class="card">
+        <form [formGroup]="viewInvestmentTypeForm">
+
+            <input pInputText
+                id="id"
+                formControlName="id"
+                type="hidden" />
+
+            <div class="p-fluid">
+                <div class="field col-12">
+                    <label class="font-medium" htmlFor="name">Name</label>
+                    <input pInputText
+                            id="name"
+                            formControlName="name"
+                            type="text"
+                            [ngClass]="{'ng-dirty ng-invalid': viewInvestmentTypeForm.get('name')?.invalid && viewInvestmentTypeForm.get('name')?.touched}" />
+                    <small class="text-red-700" *ngIf="viewInvestmentTypeForm.get('name')?.invalid && viewInvestmentTypeForm.get('name')?.touched">
+                        {{ getErrorMessage('name') }}
+                    </small>
+                </div>
+            </div>
+        </form>
+
+        <div class="flex justify-content-end flex-wrap">
+            <p-button label="Update"
+                      icon="pi pi-save"
+                      pTooltip="Update record"
+                      tooltipPosition="bottom"
+                      (onClick)="onClickSave()" />
+        </div>
+    </div>
+</ng-template>
+
+<!--page processing-->
+<app-page-processing *ngIf="isBusy"></app-page-processing>
+
+<!--toast-->
+<p-toast></p-toast>
