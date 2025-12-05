@@ -14,16 +14,16 @@ import { AuthGuard } from './@core/guards/auth-guard/auth.guard';
             },
             {
                 path: 'auth',
-                loadChildren: () => import('./demo/components/auth/auth.module')
+                loadChildren: () => import('./features/auth/auth.module')
                     .then(m => m.AuthModule)
             },
             {
                 path: 'features',
-                component: AppLayoutComponent,
                 canActivate: [AuthGuard],
                 canActivateChild: [AuthGuard],
-                loadChildren: () => import('./demo/demo.module')
-                    .then(m => m.DemoModule)
+                component: AppLayoutComponent,
+                loadChildren: () => import('./features/features.module')
+                    .then(m => m.FeaturesModule)
             },
             {
                 path: 'notfound',

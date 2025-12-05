@@ -11,9 +11,10 @@
 import { IEnvironment } from '../app/@core/interfaces/i-environment';
 
 
-const apiHost = 'localhost:5102';
+const apiHost = 'localhost:5500';
 const apiUrl = `http://${apiHost}/api/v1`;
 const apiMockUrl = `http://${apiHost}/api/v1`;
+const apiUrlNoVersion = `http://${apiHost}/api`;
 
 export const environment: IEnvironment = {
 
@@ -26,5 +27,6 @@ export const environment: IEnvironment = {
         apiHost,
         apiMockUrl,
         apiUrl,
+        apiUrlNoVersion,
     },
 };

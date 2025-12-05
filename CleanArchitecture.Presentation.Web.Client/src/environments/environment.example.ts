@@ -11,7 +11,7 @@
 import { IEnvironment } from '../app/@core/interfaces/i-environment';
 
 
-const apiHost = 'localhost:44343';
+const apiHost = 'localhost:5500';
 const apiUrl = `https://${apiHost}/api/v1`;
 const apiMockUrl = `https://${apiHost}/api/v1`;
 

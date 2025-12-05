@@ -10,7 +10,7 @@
 
 import { IEnvironment } from '../app/@core/interfaces/i-environment';
 
-const apiHost = 'localhost:44343';
+const apiHost = 'localhost:5500';
 const apiUrl = `https://${apiHost}/api/v1`;
 const apiMockUrl = `https://${apiHost}/api/v1`;
 
@@ -25,11 +25,5 @@ export const environment: IEnvironment = {
         apiHost,
         apiMockUrl,
         apiUrl,
-    },
-
-    keycloakConfig: {
-        url: 'http://localhost:8080',
-        realm: 'staff-realm',
-        clientId: 'e-vhumba-web-client',
-    },
+    }
 };
