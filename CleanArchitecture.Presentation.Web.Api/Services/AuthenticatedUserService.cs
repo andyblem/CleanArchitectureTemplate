@@ -10,19 +10,13 @@ namespace CleanArchitecture.Presentation.Web.API.Services
 {
     public class AuthenticatedUserService : IAuthenticatedUserService
     {
-        public string UserId { get; }
-
-        private string _email;
-        public string Email
-        {
-            get => string.IsNullOrEmpty(_email) ? "System" : _email;
-            set => _email = value ?? "System";
-        }
-
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public AuthenticatedUserService(IHttpContextAccessor httpContextAccessor)
         {
-            UserId = httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            _httpContextAccessor = httpContextAccessor;
         }
+
+        public string UserId => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 }

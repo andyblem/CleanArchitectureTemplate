@@ -67,7 +67,7 @@ namespace CleanArchitecture.Infrastructure.Persistence.Seeders
                     foreach (var claim in role.Claims)
                     {
                         // check if claim exists
-                        var isClaimExists = roleClaims.Any(rC => rC.Type == claim.ClaimType);
+                        var isClaimExists = roleClaims.Any(rC => rC.Value == claim.ClaimValue);
 
                         if (isClaimExists == false)
                         {

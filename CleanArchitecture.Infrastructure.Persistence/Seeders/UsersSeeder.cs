@@ -137,7 +137,7 @@ namespace CleanArchitecture.Admin.Infrastructure.Persistance.Seeders
 
                             foreach (var claim in roleClaims)
                             {
-                                var isUserClaimExists = userClaims.Any(c => c.Type == claim.Type);
+                                var isUserClaimExists = userClaims.Any(c => c.Value == claim.Value);
                                 if (isUserClaimExists == false)
                                 {
                                     await userManager.AddClaimAsync(savedUser, claim);

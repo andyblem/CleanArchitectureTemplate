@@ -60,8 +60,8 @@ builder.Services.AddTransient<IAuthenticatedUserService, AuthenticatedUserServic
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddApplicationLayer();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddIdentityProviderInfrastructure(builder, config);
 builder.Services.AddPersistenceInfrastructure(config);
+builder.Services.AddIdentityProviderInfrastructure(builder, config);
 builder.Services.AddSharedInfrastructure(config);
 
 
@@ -73,9 +73,8 @@ builder.Services.AddAuthorization(options =>
     foreach (var claim in allUniqueClaims)
     {
         // get defined claims
-        options.AddPolicy(claim.ClaimValue, 
-            policy => policy.RequireClaim(claim.ClaimType, claim.ClaimValue)
-                .RequireAuthenticatedUser());
+        options.AddPolicy(claim.ClaimValue,
+            policy => policy.RequireAuthenticatedUser().RequireClaim(claim.ClaimType, claim.ClaimValue));
 
     };
 });
@@ -131,13 +130,11 @@ app.UseErrorHandlingMiddleware();
 app.UseCors("AllowOrigin");
 app.UseHttpsRedirection();
 app.UseRouting();
+app.AddIdentityProviderInfrastructure();
 app.UseHttpLogging();
 app.UseSwaggerExtension();
 app.UseHealthChecks("/health");
-
 app.MapControllers();
-
-app.AddIdentityProviderInfrastructure();
 
 
 // default reply

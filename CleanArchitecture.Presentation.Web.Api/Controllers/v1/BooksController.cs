@@ -16,7 +16,7 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
     {
         // GET: api/<controller>
         [HttpGet]
-        //[Authorize("read:books")]
+        [Authorize("read:books")]
         [Route("GetList")]
         public async Task<IActionResult> GetList([FromQuery] GetBooksListParameter filters)
         {
@@ -37,7 +37,7 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
 
         // GET api/<controller>/5
         [HttpGet]
-        //[Authorize("read:books")]
+        [Authorize("read:books")]
         [Route("Get/{id}")]
         public async Task<IActionResult> Get([FromRoute]int id)
         {
@@ -58,7 +58,7 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
 
         // POST api/<controller>
         [HttpPost]
-        //[Authorize("create:books")]
+        [Authorize("create:books")]
         [Route("Post")]
         public async Task<IActionResult> Post([FromBody] CreateBookDTO book)
         {
@@ -78,7 +78,7 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
 
         // PUT api/<controller>/5
         [HttpPut]
-        //[Authorize("update:books")]
+        [Authorize("update:books")]
         [Route("Put/{id}")]
         public async Task<IActionResult> Put([FromRoute] int id, [FromBody]UpdateBookDTO book)
         {
@@ -103,7 +103,7 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
 
         // DELETE api/<controller>/5
         [HttpDelete]
-        //[Authorize("delete:books")]
+        [Authorize("delete:books")]
         [Route("Delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
