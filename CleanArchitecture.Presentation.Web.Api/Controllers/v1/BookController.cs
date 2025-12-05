@@ -37,7 +37,7 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
 
         // GET api/<controller>/5
         [HttpGet]
-        [Authorize("read:books")]
+        //[Authorize("read:books")]
         [Route("Get/{id}")]
         public async Task<IActionResult> Get([FromRoute]int id)
         {
@@ -78,7 +78,7 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
 
         // PUT api/<controller>/5
         [HttpPut]
-        [Authorize("update:books")]
+        //[Authorize("update:books")]
         [Route("Put/{id}")]
         public async Task<IActionResult> Put([FromRoute] int id, [FromBody]UpdateBookDTO book)
         {

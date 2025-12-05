@@ -154,8 +154,8 @@ export class IndexBooksComponent {
         this.getPaginatedData(this.requestParameter);
     }
 
-    public onClickView(BookId: number): void {
-        this.router.navigate(['/features/fleet/vehicle-make/view', BookId]);
+    public onClickView(bookId: number): void {
+        this.router.navigate(['/features/books/view', bookId]);
     }
 
     public onPageChange(event: TablePageEvent): void {
@@ -183,7 +183,7 @@ export class IndexBooksComponent {
                         
                         // redirect to edit
                         this.isBusy = false;
-                        this.router.navigate(['/features/books/view', successResponse]);
+                        this.router.navigate(['/features/books/view', (successResponse as any).data]);
                     },
                     error: (errorResponse) => {
 
