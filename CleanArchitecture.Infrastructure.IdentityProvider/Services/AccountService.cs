@@ -50,6 +50,17 @@ namespace CleanArchitecture.Infrastructure.IdentityProvider.Services
 
         public async Task<Response<AuthenticationResponseDTO>> AuthenticateAsync(AuthenticationRequestDTO request)
         {
+            // Validate the request using FluentValidation
+            var validator = new AuthenticationRequestValidator();
+            var validationResult = await validator.ValidateAsync(request);
+
+            if (!validationResult.IsValid)
+            {
+                var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+                return Response<AuthenticationResponseDTO>.Failure("Validation failed", errors);
+            }
+
+
             //check the user
             var user = await _customUserManager.FindByEmailAsync(request.Email);
 
@@ -99,6 +110,16 @@ namespace CleanArchitecture.Infrastructure.IdentityProvider.Services
                 var audience = _jwtSettings.Audience;
                 var issuer = _jwtSettings.Issuer;
                 var issuerKeyBytes = Encoding.ASCII.GetBytes(_jwtSettings.Key);
+
+                if (issuerKeyBytes.Length < 64)
+                {
+                    _logger.LogError("JWT signing key is too short. Required: 64 bytes (512 bits), Current: {KeyLength} bytes ({BitLength} bits)",
+                        issuerKeyBytes.Length, 
+                        issuerKeyBytes.Length * 8);
+
+                    return Response<AuthenticationResponseDTO>.Failure("JWT signing key must be at least 64 characters long for HMAC-SHA512");
+                }
+
                 var signInCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(issuerKeyBytes),
                     SecurityAlgorithms.HmacSha512Signature

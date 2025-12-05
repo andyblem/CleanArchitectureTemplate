@@ -89,7 +89,7 @@ export class LoginComponent {
                         this.isBusy = false;
 
                         // get data
-                        const authenticationData: IAuthenticateResponseDto = result as any as IAuthenticateResponseDto;
+                        const authenticationData: IAuthenticateResponseDto = (result as any).data as IAuthenticateResponseDto;
 
                         // save data to local storage
                         this.authenticationService.authenticate(authenticationData)

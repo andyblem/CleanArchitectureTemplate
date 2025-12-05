@@ -76,7 +76,7 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("authenticate")]
-        public async Task<IActionResult> Authenticate(AuthenticationRequestDTO request)
+        public async Task<IActionResult> Authenticate([FromBody]AuthenticationRequestDTO request)
         {
             return Ok(await _accountService.AuthenticateAsync(request));
 

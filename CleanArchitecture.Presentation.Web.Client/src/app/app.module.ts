@@ -17,8 +17,7 @@ import { ErrorInterceptorProvider } from './@core/interceptors/error-interceptor
 
 @NgModule({
     declarations: [
-        AppComponent,
-        NotfoundComponent
+        AppComponent
     ],
     imports: [
         AppRoutingModule,

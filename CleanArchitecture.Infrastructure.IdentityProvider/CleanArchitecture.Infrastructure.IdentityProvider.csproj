@@ -16,4 +16,7 @@
     <ProjectReference Include="..\CleanArchitecture.Application\CleanArchitecture.Application.csproj" />
     <ProjectReference Include="..\CleanArchitecture.Infrastructure.Shared\CleanArchitecture.Infrastructure.Shared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Validators\" />
+  </ItemGroup>
 </Project>

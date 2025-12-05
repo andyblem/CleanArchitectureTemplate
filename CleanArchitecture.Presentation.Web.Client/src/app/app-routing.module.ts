@@ -27,7 +27,8 @@ import { AuthGuard } from './@core/guards/auth-guard/auth.guard';
             },
             {
                 path: 'notfound',
-                component: NotfoundComponent
+                loadChildren: () => import('./demo/components/notfound/notfound.module')
+                    .then(m => m.NotfoundModule)
             },
             {
                 path: '**',

@@ -15,11 +15,7 @@ import { RouterModule } from '@angular/router';
         { 
             path: 'login', 
             loadChildren: () => import('./login/login.module')
-                .then(m => m.LoginModule) },
-        {
-            path: 'signup',
-            loadChildren: () => import('./sign-up/sign-up.module')
-                .then(m => m.SignUpModule)
+                .then(m => m.LoginModule) 
         },
         { 
             path: '**', 
