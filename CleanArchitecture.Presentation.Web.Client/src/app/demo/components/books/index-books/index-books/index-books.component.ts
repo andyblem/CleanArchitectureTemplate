@@ -188,6 +188,13 @@ export class IndexBooksComponent {
                     error: (errorResponse) => {
 
                         this.isBusy = false;
+
+                        // show error
+                        this.messageService.add({
+                            detail: errorResponse.message || 'Error whilst creating book',
+                            summary: 'Form invalid',
+                            severity: 'error'
+                        });
                     }
                 });
 
