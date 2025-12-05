@@ -8,6 +8,11 @@ const routes: Routes = [
             .then(m => m.DashboardModule)
     },
     {
+        path: 'books',
+        loadChildren: () => import('./components/books/books.module')
+            .then(m => m.BooksModule)
+    },
+    {
         path: 'uikit',
         loadChildren: () => import('./components/uikit/uikit.module')
             .then(m => m.UIkitModule)

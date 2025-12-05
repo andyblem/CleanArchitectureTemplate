@@ -16,7 +16,7 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
     {
         // GET: api/<controller>
         [HttpGet]
-        [Authorize("read:books")]
+        //[Authorize("read:books")]
         [Route("GetList")]
         public async Task<IActionResult> GetList([FromQuery] GetBooksListParameter filters)
         {
@@ -58,7 +58,7 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
 
         // POST api/<controller>
         [HttpPost]
-        [Authorize("create:books")]
+        //[Authorize("create:books")]
         [Route("Post")]
         public async Task<IActionResult> Post([FromBody] CreateBookDTO book)
         {

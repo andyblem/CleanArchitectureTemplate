@@ -12,6 +12,11 @@ namespace CleanArchitecture.Application.Features.Parameters
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
 
+        public string SearchString { get; init; }
+        public string SortFilter { get; init; }
+        public string SortOrder { get; init; }
+
+
         public RequestParameter()
         {
             PageNumber = 1;

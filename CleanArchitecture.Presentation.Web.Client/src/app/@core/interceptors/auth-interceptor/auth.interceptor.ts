@@ -18,13 +18,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-
       const requestForApis = request.url.startsWith(this.environmentService.apiConfig.apiUrl);
       const isLoggedIn = this.authenticationService.isStillLoggedIn;
-
-      console.log('inside intercept');
-      console.log(`request is ${JSON.stringify(request.body)}`);
-
 
       if (isLoggedIn && requestForApis) {
 

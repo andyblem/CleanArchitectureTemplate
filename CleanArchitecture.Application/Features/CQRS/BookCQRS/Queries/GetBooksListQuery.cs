@@ -47,6 +47,30 @@ namespace CleanArchitecture.Application.Features.CQRS.Books.Queries
                         Price = b.Price
                     });
 
+                // filter
+                if(!string.IsNullOrWhiteSpace(request.Parameters.SearchString))
+                {
+                    booksQuery = booksQuery.Where(b => b.Title.Contains(request.Parameters.SearchString) || b.ISBN.Contains(request.Parameters.SearchString));
+                }
+
+                // sort
+                if (request.Parameters.SortFilter?.ToLower() == "title")
+                {
+                    booksQuery = request.Parameters.SortOrder?.ToLower() == "desc"
+                        ? booksQuery.OrderByDescending(b => b.Title)
+                        : booksQuery.OrderBy(b => b.Title);
+                }
+                else if(request.Parameters.SortFilter?.ToLower() == "price")
+                {
+                    booksQuery = request.Parameters.SortOrder?.ToLower() == "desc"
+                        ? booksQuery.OrderByDescending(b => b.Price)
+                        : booksQuery.OrderBy(b => b.Price);
+                }
+                else
+                {
+                    booksQuery = booksQuery.OrderBy(b => b.Title);
+                }
+
                 // count total books
                 var totalBooks = await booksQuery.CountAsync(cancellationToken);
                 var result = await booksQuery

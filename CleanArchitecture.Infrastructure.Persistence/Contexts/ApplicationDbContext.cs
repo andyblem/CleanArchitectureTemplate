@@ -23,6 +23,7 @@ namespace CleanArchitecture.Infrastructure.Persistence.Contexts
         private readonly IAuthenticatedUserService _authenticatedUser;
 
         public DbSet<Book> Books { get; set; }
+        public DbSet<GeneralAudit> GeneralAudits { get; set; }
 
 
         public ApplicationDbContext()
