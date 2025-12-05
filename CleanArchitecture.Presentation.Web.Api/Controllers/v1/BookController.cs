@@ -103,7 +103,7 @@ namespace CleanArchitecture.Presentation.Web.API.Controllers.v1
 
         // DELETE api/<controller>/5
         [HttpDelete]
-        [Authorize("delete:books")]
+        //[Authorize("delete:books")]
         [Route("Delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {

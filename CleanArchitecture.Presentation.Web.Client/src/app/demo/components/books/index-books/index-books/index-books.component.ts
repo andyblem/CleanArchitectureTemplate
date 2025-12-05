@@ -94,7 +94,7 @@ export class IndexBooksComponent {
         this.isAddBookModalVisible = true;
     }
 
-    public onClickDelete(BookId: number): void {
+    public onClickDelete(bookId: number): void {
         
         // show delete notification
         Swal.fire({
@@ -109,10 +109,10 @@ export class IndexBooksComponent {
 
             if (result.isConfirmed) {
                 this.isBusy = true;
-                this.indexBookservice.delete(BookId)
+                this.indexBookservice.delete(bookId)
                     .subscribe({
                         next: (successResponse) => {
-
+                            
                             this.isBusy = false;
 
                             // show message

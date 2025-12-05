@@ -35,14 +35,10 @@ export class IndexBookHttpService {
 
         // create url
         const url = this.apiEndPointService
-            .createUrl(`${this.prefix}/delete`);
-
-        // set parameters
-        let httpParams = new HttpParams()
-            .set("id", id);
+            .createUrl(`${this.prefix}/delete/${id}`);
 
         // make request
-        const result = this.apiHttpService.delete(url, { params: httpParams });
+        const result = this.apiHttpService.delete(url);
 
         // return result
         return result;
