@@ -83,7 +83,7 @@
                             <td><span class="p-column-title">#</span>{{ rowIndex + 1 }}</td>
                             <td><span class="p-column-title">Title</span>{{ book.title }}</td>
                             <td><span class="p-column-title">ISBN</span>{{ book.isbn }}</td>
-                            <td><span class="p-column-title">Price</span>{{ book.price }}</td>
+                            <td><span class="p-column-title">Price</span>{{ book.price | currency:'USD':'symbol':'1.2-2' }}</td>
                             <td>
                                 <div class="flex flex-wrap column-gap-1 row-gap-1">
                                     <p-button pTooltip="Edit"
