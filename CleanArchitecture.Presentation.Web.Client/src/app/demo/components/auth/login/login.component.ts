@@ -41,13 +41,14 @@ export class LoginComponent {
         // set up the return url
         this.returnUrl = this.activedRoute.snapshot.queryParams['returnUrl'] || 'features';
 
+        //todo:comment this out to login every time, if you are already signed in
         // if already logged in go to redirect url
-        const isStillLoggedIn = this.authenticationService.isStillLoggedIn;
+        /*const isStillLoggedIn = this.authenticationService.isStillLoggedIn;
         if (isStillLoggedIn == true) {
 
             // redirect to redirect url
             this.router.navigateByUrl(this.returnUrl);
-        }
+        }*/
 
         // create stuff
         this.loginForm = this.createLoginForm();

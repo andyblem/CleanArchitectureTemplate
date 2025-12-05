@@ -10,33 +10,40 @@
 
                 <form class="mb-5" [formGroup]="loginForm">
 
-                    <div class="mb-5">
-                        <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
-                        <input class="w-full md:w-30rem"
-                               formControlName="email"
-                               id="email"
-                               placeholder="Email address"
-                               style="padding:1rem"
-                               type="text"
-                               [ngClass]="{'ng-invalid ng-dirty': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
-                               pInputText>
-                        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-                            <small id="email-help" class="p-error" *ngIf="loginForm.get('email')?.hasError('required')">Required</small>
+                    <div class="p-fluid p-formgrid grid">
+                        <div class="field col-12">
+                            <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
+                            <input class="w-full md:w-30rem"
+                                formControlName="email"
+                                id="email"
+                                placeholder="Email address"
+                                style="padding:1rem"
+                                type="text"
+                                [ngClass]="{'ng-invalid ng-dirty': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
+                                pInputText>
+                            <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+                                <small id="email-help" class="p-error" *ngIf="loginForm.get('email')?.hasError('required')">Required</small>
+                            </div>
                         </div>
-
                     </div>
 
-                    <div class="mb-5">
-                        <label for="password" class="block text-900 font-medium text-xl mb-2">Password</label>
-                        <p-password formControlName="password"
-                                    id="password"
-                                    inputStyleClass="w-full p-3 md:w-30rem"
-                                    placeholder="Password"
-                                    [ngClass]="{'ng-invalid ng-dirty': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
-                                    [toggleMask]="true">
-                        </p-password>
-                        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-                            <small id="password-help" class="p-error" *ngIf="loginForm.get('password')?.hasError('required')">Required</small>
+                    <div class="p-fluid p-formgrid grid">
+                        <div class="field col-12">
+                            <label for="password" class="block text-900 font-medium text-xl mb-2">Password</label>
+                            <span class="p-input-icon-right w-full md:w-30rem">
+                                <p-password formControlName="password"
+                                            id="password"
+                                            styleClass="w-full"
+                                            inputStyleClass="w-full p-3"
+                                            placeholder="Password"
+                                            [ngClass]="{'ng-invalid ng-dirty': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
+                                            [toggleMask]="true"
+                                            [feedback]="false">
+                                </p-password>
+                            </span>
+                            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                                <small id="password-help" class="p-error" *ngIf="loginForm.get('password')?.hasError('required')">Required</small>
+                            </div>
                         </div>
                     </div>
 
