@@ -42,7 +42,7 @@ namespace CleanArchitecture.Application.Features.CQRS.Books.Commands
                 if (book != null)
                 {
                     // removed book
-                    _dbContext.Books.Remove(book);
+                    _dbContext.SoftRemove(book);
                     await _dbContext.SaveChangesAsync(cancellationToken);
 
                     // return response

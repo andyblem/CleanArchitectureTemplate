@@ -44,6 +44,14 @@ namespace CleanArchitecture.Infrastructure.Persistence.Contexts
             _authenticatedUser = authenticatedUser;
         }
 
+        public void SoftRemove<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
+            where TEntity : class, IAuditable
+        {
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+
+            entity.IsDeleted = true;
+            Entry(entity).Property(p => p.IsDeleted).IsModified = true;
+        }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -58,13 +66,25 @@ namespace CleanArchitecture.Infrastructure.Persistence.Contexts
                             entry.Entity.CreatedBy = _authenticatedUser.UserId;
                             break;
                         case EntityState.Modified:
-                            entry.Entity.ModifiedAt = _dateTime.NowUtc;
-                            entry.Entity.ModifiedBy = _authenticatedUser.UserId;
-                            break;
-                        case EntityState.Deleted:
-                            entry.Entity.IsDeleted = true;
-                            entry.Entity.DeletedAt = _dateTime.NowUtc;
-                            entry.Entity.DeletedBy = _authenticatedUser.UserId;
+                            
+                            if (entry.Property(nameof(IAuditable.IsDeleted)).IsModified &&
+                                entry.Entity.IsDeleted)
+                            {
+                                // This is a soft delete - only update delete-related fields
+                                entry.Entity.DeletedAt = _dateTime.NowUtc;
+                                entry.Entity.DeletedBy = _authenticatedUser.UserId;
+
+                                // Ensure delete properties are marked as modified
+                                entry.Property(nameof(IAuditable.IsDeleted)).IsModified = true;
+                                entry.Property(nameof(IAuditable.DeletedAt)).IsModified = true;
+                                entry.Property(nameof(IAuditable.DeletedBy)).IsModified = true;
+                            }
+                            else
+                            {
+                                // This is a regular update - update modification fields
+                                entry.Entity.ModifiedAt = _dateTime.NowUtc;
+                                entry.Entity.ModifiedBy = _authenticatedUser.UserId;
+                            }
                             break;
                     }
                 }

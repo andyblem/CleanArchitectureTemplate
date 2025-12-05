@@ -1,4 +1,5 @@
 using CleanArchitecture.Domain.Entities;
+using CleanArchitecture.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace CleanArchitecture.Application.Interfaces
     {
         DbSet<Book> Books { get; }
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+       void SoftRemove<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class, IAuditable;
+       Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
