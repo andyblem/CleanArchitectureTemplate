@@ -4,9 +4,10 @@ import { SelectItem } from 'primeng/api';
 import { IQuickEnrollmentDto } from './dtos/i-quick-enrollment-dto';
 
 @Component({
-  selector: 'app-quick-enrollment-form',
-  templateUrl: './quick-enrollment-form.component.html',
-  styleUrls: ['./quick-enrollment-form.component.scss'],
+    selector: 'app-quick-enrollment-form',
+    templateUrl: './quick-enrollment-form.component.html',
+    styleUrls: ['./quick-enrollment-form.component.scss'],
+    standalone: false
 })
 export class QuickEnrollmentFormComponent implements OnInit {
 

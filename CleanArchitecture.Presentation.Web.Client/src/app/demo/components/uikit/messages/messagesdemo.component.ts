@@ -3,7 +3,8 @@ import { Message, MessageService } from 'primeng/api';
 
 @Component({
     templateUrl: './messagesdemo.component.html',
-    providers: [MessageService]
+    providers: [MessageService],
+    standalone: false
 })
 export class MessagesDemoComponent {
 

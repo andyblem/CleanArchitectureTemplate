@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-    templateUrl: './blocks.component.html'
+    templateUrl: './blocks.component.html',
+    standalone: false
 })
 export class BlocksComponent{
 

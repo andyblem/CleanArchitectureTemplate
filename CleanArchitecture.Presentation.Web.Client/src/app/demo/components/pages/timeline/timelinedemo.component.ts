@@ -3,7 +3,8 @@ import { PrimeIcons } from 'primeng/api';
 
 @Component({
     templateUrl: './timelinedemo.component.html',
-    styleUrls: ['./timelinedemo.scss']
+    styleUrls: ['./timelinedemo.scss'],
+    standalone: false
 })
 export class TimelineDemoComponent implements OnInit {
 

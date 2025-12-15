@@ -13,7 +13,8 @@ import { ICreateBookDto } from './dtos/i-create-book-dto';
     selector: 'app-index-books',
     templateUrl: './index-books.component.html',
     styleUrls: ['./index-books.component.scss'],
-    providers: [MessageService]
+    providers: [MessageService],
+    standalone: false
 })
 export class IndexBooksComponent {
 

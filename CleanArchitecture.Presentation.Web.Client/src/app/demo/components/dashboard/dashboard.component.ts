@@ -7,6 +7,7 @@ import { LayoutService } from 'src/app/layout/service/app.layout.service';
 
 @Component({
     templateUrl: './dashboard.component.html',
+    standalone: false
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 

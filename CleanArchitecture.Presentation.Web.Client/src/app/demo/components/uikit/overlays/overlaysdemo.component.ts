@@ -5,7 +5,8 @@ import { ProductService } from 'src/app/demo/service/product.service';
 
 @Component({
     templateUrl: './overlaysdemo.component.html',
-    providers: [ConfirmationService, MessageService]
+    providers: [ConfirmationService, MessageService],
+    standalone: false
 })
 export class OverlaysDemoComponent implements OnInit {
 

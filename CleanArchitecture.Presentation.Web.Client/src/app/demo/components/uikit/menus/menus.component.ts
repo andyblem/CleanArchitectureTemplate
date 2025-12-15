@@ -7,7 +7,8 @@ import { MegaMenuItem, MenuItem } from 'primeng/api';
         :host ::ng-deep .p-menubar-root-list {
             flex-wrap: wrap;
         }
-    `]
+    `],
+    standalone: false
 })
 export class MenusComponent implements OnInit {
 

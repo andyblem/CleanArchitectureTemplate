@@ -4,9 +4,10 @@ import { PasswordMatch } from '../../../../../validators/password-match-validato
 import { PasswordStrength } from '../../../../../validators/password-strength-validator';
 
 @Component({
-  selector: 'app-sync-accounts',
-  templateUrl: './sync-accounts.component.html',
-  styleUrls: ['./sync-accounts.component.scss']
+    selector: 'app-sync-accounts',
+    templateUrl: './sync-accounts.component.html',
+    styleUrls: ['./sync-accounts.component.scss'],
+    standalone: false
 })
 export class SyncAccountsComponent {
 

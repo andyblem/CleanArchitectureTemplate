@@ -19,7 +19,8 @@ import { IAuthenticateResponseDto } from 'src/app/@core/services/authentication-
             color: var(--primary-color) !important;
         }
     `],
-    providers: [MessageService]
+    providers: [MessageService],
+    standalone: false
 })
 export class LoginComponent {
 

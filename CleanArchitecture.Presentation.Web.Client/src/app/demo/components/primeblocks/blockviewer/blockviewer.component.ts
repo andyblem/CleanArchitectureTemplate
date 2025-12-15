@@ -35,7 +35,8 @@ enum BlockView {
         </div>
     </div>
   `,
-    styleUrls: ['./blockviewer.component.scss']
+    styleUrls: ['./blockviewer.component.scss'],
+    standalone: false
 })
 export class BlockViewerComponent {
 

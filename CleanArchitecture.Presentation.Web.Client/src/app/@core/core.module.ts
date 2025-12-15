@@ -1,5 +1,5 @@
 import { initializer } from './app-initializer';
-import { APP_INITIALIZER, ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import { ModuleWithProviders, NgModule, Optional, SkipSelf, inject, provideAppInitializer } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { AuthGuard } from './guards/auth-guard/auth.guard';
@@ -29,15 +29,10 @@ export class CoreModule {
                     provide: AuthGuard,
                     useValue: AuthGuard
                 },
-                {
-                    provide: APP_INITIALIZER,
-                    useFactory: initializer,
-                    multi: true,
-                    deps: [
-                        ApiEndpointService,
-                        EnvironmentService
-                    ],
-                },
+                provideAppInitializer(() => {
+        const initializerFn = (initializer)(inject(ApiEndpointService), inject(EnvironmentService));
+        return initializerFn();
+      }),
             ]
         };
     }

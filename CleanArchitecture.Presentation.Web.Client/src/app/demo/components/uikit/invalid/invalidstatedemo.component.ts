@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CountryService } from 'src/app/demo/service/country.service';
 
 @Component({
-    templateUrl: './invalidstatedemo.component.html'
+    templateUrl: './invalidstatedemo.component.html',
+    standalone: false
 })
 export class InvalidStateDemoComponent implements OnInit {
 

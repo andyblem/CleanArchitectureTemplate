@@ -3,6 +3,7 @@ import { IconService } from 'src/app/demo/service/icon.service';
 
 @Component({
     templateUrl: './icons.component.html',
+    standalone: false
 })
 export class IconsComponent implements OnInit {
 

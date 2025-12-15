@@ -3,7 +3,8 @@ import { NodeService } from 'src/app/demo/service/node.service';
 import { TreeNode} from 'primeng/api';
 
 @Component({
-    templateUrl: './treedemo.component.html'
+    templateUrl: './treedemo.component.html',
+    standalone: false
 })
 export class TreeDemoComponent implements OnInit {
 

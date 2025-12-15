@@ -7,10 +7,11 @@ import { switchMap } from 'rxjs';
 import { IViewBookDto } from './dtos/i-view-book-dto';
 
 @Component({
-  selector: 'app-view-book',
-  templateUrl: './view-book.component.html',
-  styleUrls: ['./view-book.component.scss'],
-  providers: [MessageService]
+    selector: 'app-view-book',
+    templateUrl: './view-book.component.html',
+    styleUrls: ['./view-book.component.scss'],
+    providers: [MessageService],
+    standalone: false
 })
 export class ViewBookComponent implements OnInit {
   

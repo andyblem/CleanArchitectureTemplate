@@ -3,6 +3,7 @@ import { CountryService } from 'src/app/demo/service/country.service';
 
 @Component({
     templateUrl: './floatlabeldemo.component.html',
+    standalone: false
 })
 export class FloatLabelDemoComponent implements OnInit {
 

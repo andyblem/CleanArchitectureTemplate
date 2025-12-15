@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 @Component({
-    templateUrl: './buttondemo.component.html'
+    templateUrl: './buttondemo.component.html',
+    standalone: false
 })
 export class ButtonDemoComponent implements OnInit {
 

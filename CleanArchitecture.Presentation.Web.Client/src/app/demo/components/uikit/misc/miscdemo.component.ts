@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
-    templateUrl: './miscdemo.component.html'
+    templateUrl: './miscdemo.component.html',
+    standalone: false
 })
 export class MiscDemoComponent implements OnInit, OnDestroy {
 
