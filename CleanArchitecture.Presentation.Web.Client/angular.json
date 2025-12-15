@@ -99,13 +99,13 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "epl_fsm-client:build:production"
+                          "buildTarget": "epl_fsm-client:build:production"
                         },
                         "development": {
-                            "browserTarget": "epl_fsm-client:build:development"
+                          "buildTarget": "epl_fsm-client:build:development"
                         },
                         "staging": {
-                            "browserTarget": "epl_fsm-client:build:staging"
+                          "buildTarget": "epl_fsm-client:build:staging"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -113,7 +113,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "epl_fsm-client:build"
+                      "buildTarget": "epl_fsm-client:build"
                     }
                 },
                 "test": {
