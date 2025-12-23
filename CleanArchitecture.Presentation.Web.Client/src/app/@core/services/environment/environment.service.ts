@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { KeycloakConfig } from 'keycloak-js';
 import { IEnvironment, LogLevel } from '../../../@core/interfaces/i-environment';
 import { IApiConfig } from '../../interfaces/i-api-config';
 

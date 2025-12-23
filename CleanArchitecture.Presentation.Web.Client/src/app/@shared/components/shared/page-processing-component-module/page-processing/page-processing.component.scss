@@ -1,7 +1,5 @@
 ::ng-deep .p-blockui {
-    z-index: 1000; /* Adjust the value as needed */
-}
-
-::ng-deep .p-blockui-mask {
-    z-index: 1000; /* Adjust the value as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
