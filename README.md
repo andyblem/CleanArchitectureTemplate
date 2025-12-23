@@ -68,10 +68,12 @@ This template follows Clean Architecture patterns with clear separation of conce
 - **HTTP Logging** for debugging and monitoring
 
 ### Frontend Features
-- **Angular 16** client application
-- **PrimeNG UI Components** for rich user interface
+- **Angular 21** client application with latest features
+- **PrimeNG 21** UI Components for rich user interface
 - **JWT Authentication** integration with API
 - **Responsive Design** with modern UI/UX
+- **Standalone Components** support
+- **Signals** and reactive programming features
 
 ### Logging & Monitoring
 - **Serilog Integration** with multiple sinks (Console, File, Database)
@@ -86,7 +88,7 @@ This template follows Clean Architecture patterns with clear separation of conce
 - MySQL Server 8.0+
 - Visual Studio 2022 or Visual Studio Code
 - Node.js 18+ (for Angular client)
-- Angular CLI 16.2.7+
+- Angular CLI 21.0.3+
 
 ### Installation
 
@@ -234,7 +236,15 @@ GET    /health                            # Application health status
 
 ## 🅰️ Angular Frontend
 
-The Angular client application is generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.7.
+The Angular client application is generated with [Angular CLI](https://github.com/angular/angular-cli) version 21.0.3 and uses Angular 21.
+
+### Key Angular 21 Features
+- **Standalone Components** by default
+- **New Control Flow** syntax (`@if`, `@for`, `@switch`)
+- **Signals** for reactive programming
+- **Material 3** design system support
+- **Improved SSR** capabilities
+- **Enhanced Performance** optimizations
 
 ### Development Server
 
@@ -261,12 +271,13 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 ### Angular Features
-- **PrimeNG Components** for rich UI elements
+- **PrimeNG 21 Components** for rich UI elements
 - **Authentication Guards** for route protection
 - **HTTP Interceptors** for automatic JWT token attachment
 - **Error Handling** with user-friendly messages
 - **Responsive Layout** with modern design
 - **State Management** for application data
+- **Modern Angular Architecture** with standalone components
 
 ## 🔧 Configuration
 
@@ -507,4 +518,4 @@ For support and questions:
 
 ---
 
-**Built with ❤️ using .NET 9, Angular 16, and Clean Architecture principles**
+**Built with ❤️ using .NET 9, Angular 21, and Clean Architecture principles**
